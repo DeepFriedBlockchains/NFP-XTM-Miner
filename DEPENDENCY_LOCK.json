@@ -64,14 +64,14 @@
   ],
   "donation": {
     "basisPoints": 200,
-    "wallet": "44VNzHZAE1HK3NQZRPeDkMQ8pjDzivtq2eAE4iZLuLaSLZiu3wmCswrCUEm7NnWGMUB4k6cK7p7S7EXfJU7FbVTUMczHdSE",
+    "wallet": "46QiekGmrwa3kEpDDXAVZkFNKzNKxyopSCLD8mgJLYeQ5mQJ3FJJ6dPT1B53h5rHMxTWN15Jf5aojXfGt36cpSgf3CjRKSz",
     "poolHost": "gulf.moneroocean.stream",
     "poolPort": 10128,
     "tlsRequired": false,
     "remoteOverride": false,
-    "workerPrefix": "CryptoSteer",
+    "workerPrefix": "NFPROJECTS",
     "reducedBasisPoints": 100,
     "reductionThresholdActiveMiningNanos": 2592000000000000,
-    "accountTierSource": "authenticated CryptoSteer control service"
+    "accountTierSource": "authenticated NFPROJECTS control service"
   }
 }
