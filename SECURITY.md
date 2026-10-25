@@ -4,7 +4,7 @@
 Security reports should be sent privately to:
 
 ```text
-dev@thecryptosteer.com
+devteam@kasuallabz.xyz
 ```
 
 Include the affected version, device and Android version, reproduction steps, impact, and any supporting logs with credentials removed.
