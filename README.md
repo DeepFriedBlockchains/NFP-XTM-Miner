@@ -60,11 +60,11 @@ The following remain unverified: Tari pool accepted shares, complete source and 
 
 ## Source and building
 
-Repository: [NightFantomProjects/CryptoSteerFork-XTM-Miner](https://github.com/NightFantomProjects/CryptoSteerFork-XTM-Miner)
+Repository: [DeepFriedBlockchains/NFP-XTM-Miner](https://github.com/DeepFriedBlockchains/NFP-XTM-Miner)
 
 ```bash
-git clone https://github.com/NightFantomProjects/CryptoSteerFork-XTM-Miner.git
-cd CryptoSteerFork-XTM-Miner
+git clone https://github.com/DeepFriedBlockchains/NFP-XTM-Miner.git
+cd NFP-XTM-Miner
 ```
 
 The upstream project uses a Linux/Android toolchain. Fork-specific dependencies, build scripts, signing and build variants must be checked before publishing authoritative build instructions. Do not assume the original project's release steps produce a verified Tari APK.
