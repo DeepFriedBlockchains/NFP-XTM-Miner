@@ -12,7 +12,7 @@ Reference: `XTM-MINER-arm64-debug.apk`, SHA-256 `ded5a9e67f0203ead217fd7cd94a39c
 | Upstream services | Enabled in foundation debug defaults | Historical report found disabled flags | Disabled flags and rejecting shared transport |
 | Native integration | C++ RandomX and JNI | ARM64 `libcryptosteer_miner.so` | Build from reconstructed source, never copy the reference binary as new source output |
 | Settings logs | Existing Logs page | Existing Logs navigation | Settings terminal entry plus same event stream, bounded retention and sanitized export |
-| About donations | Upstream fee disclosure | Zero developer fee; original footer | UI-only voluntary support, Casual Labs/NFProjects credits, required attribution retained |
+| About donations | Upstream fee disclosure | Zero developer fee; original footer | UI-only voluntary support, Kasual Labz/NFProjects credits, required attribution retained |
 
 Fresh signature verification passed (APK v2). The reference signer is an Android debug certificate; the original private signing key is not present in supplied recovery material. A newly generated debug key must not be described as update-compatible with the installed reference.
 

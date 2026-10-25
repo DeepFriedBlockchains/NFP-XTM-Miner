@@ -1159,7 +1159,7 @@ fun AboutScreen(snapshot: MiningSnapshot, donationTier: DonationTierUiState) {
             ) {
                 Column(Modifier.padding(22.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("XTM-MINER", style = MaterialTheme.typography.headlineLarge)
-                    Text("NFProjects • Casual Labs • Tari (XTM) Android Miner", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("NFProjects • Kasual Labz • Tari (XTM) Android Miner", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     StatusChip("Version ${BuildConfig.VERSION_NAME}", StatusTone.ACTION)
                 }
             }
@@ -1186,7 +1186,7 @@ fun AboutScreen(snapshot: MiningSnapshot, donationTier: DonationTierUiState) {
             }
         }
         item { AboutDonationCard() }
-        item { Text("Developed by Casual Labs • Published by NFProjects", style = MaterialTheme.typography.bodyMedium) }
+        item { Text("Developed by Kasual Labz • Published by NFProjects", style = MaterialTheme.typography.bodyMedium) }
         item { Text("© 2026 THE CRYPTO STEER LLC. Licensed under Apache-2.0. No advertisements or third-party analytics SDKs are included. Original upstream attribution retained. Upstream accounts and remote control are disabled in this fork.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant) }
     }
 }

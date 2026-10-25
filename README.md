@@ -1,6 +1,6 @@
 # NFP-XTM-Miner
 
-**XTM-MINER** is the NFProjects Android ARM64 Tari miner, developed by Casual Labs from the existing CryptoSteer Android application. This recovery preserves the Compose UI, C++ RandomX/JNI engine, worker controls, Android foreground service, encrypted settings, and battery/thermal protections.
+**XTM-MINER** is the NFProjects Android ARM64 Tari miner, developed by Kasual Labz from the existing CryptoSteer Android application. This recovery preserves the Compose UI, C++ RandomX/JNI engine, worker controls, Android foreground service, encrypted settings, and battery/thermal protections.
 
 **Recovery build under validation.** The historical tested APK is preserved separately. Its device results do not validate this reconstructed source or a new APK. See [test report](docs/TEST-REPORT.md) and [release checklist](docs/RELEASE-CHECKLIST.md).
 
