@@ -369,7 +369,7 @@ private fun NativeCapabilitiesCard(info: DeviceInfoSnapshot, mining: MiningSnaps
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            SectionHeader("Native mining capabilities", "Read from the same CryptoSteer native library used by the miner")
+            SectionHeader("Native mining capabilities", "Read from the same XTM-MINER native library used by the miner")
             DefinitionRow("Native engine", info.nativeVersion)
             DefinitionRow("Native topology", info.nativeCpuTopology)
             DefinitionRow("64-bit ABI", info.supported64BitAbis.joinToString().ifBlank { "Unavailable" })
@@ -415,7 +415,7 @@ private fun DevicePlatformCard(info: DeviceInfoSnapshot) {
 internal fun miningGuidance(info: DeviceInfoSnapshot, mining: MiningSnapshot, settings: AppSettings): List<String> = buildList {
     add("Run the local Benchmark and five-minute Auto-tune before choosing final thread or core settings; specifications alone do not prove sustained hashrate.")
     if (info.allowedCpuIds.size < info.onlineCpuIds.size) {
-        add("Android currently allows this app to use ${info.allowedCpuIds.size} of ${info.onlineCpuIds.size} online CPUs. CryptoSteer respects that cpuset instead of attempting to escape system scheduling policy.")
+        add("Android currently allows this app to use ${info.allowedCpuIds.size} of ${info.onlineCpuIds.size} online CPUs. XTM-MINER respects that cpuset instead of attempting to escape system scheduling policy.")
     } else {
         add("All ${info.allowedCpuIds.size} reported online CPUs are currently inside the app's allowed CPU mask.")
     }

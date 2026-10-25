@@ -58,7 +58,6 @@ private:
     void drain_shares(class StratumClient& client, std::uint64_t generation);
     void account_elapsed(bool donation, std::chrono::steady_clock::duration elapsed);
     [[nodiscard]] int selected_worker_count() const;
-    [[nodiscard]] Endpoint donation_endpoint() const;
     void safe_state(std::string const& state, std::string const& message = {}) noexcept;
     void safe_log(std::string const& level, std::string const& message) const noexcept;
 

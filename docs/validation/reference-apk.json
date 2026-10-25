@@ -1,0 +1,29 @@
+{
+  "file": "XTM-MINER-arm64-debug.apk",
+  "bytes": 76429347,
+  "sha256": "ded5a9e67f0203ead217fd7cd94a39c95719b2a5d97f7284fa7648f45f0f003b",
+  "zip_crc": "PASS",
+  "native_libraries": [
+    {
+      "path": "lib/arm64-v8a/libandroidx.graphics.path.so",
+      "bytes": 10096,
+      "sha256": "41e9a793c43a0f4fddb19e33f346bace464f30f888ba7b9eaf96294ea115bfb6",
+      "elf_machine": 183
+    },
+    {
+      "path": "lib/arm64-v8a/libcryptosteer_miner.so",
+      "bytes": 6147632,
+      "sha256": "a6ef21054a1bb3753fe42580a73292a952a1642ebe2538de158dfc14cd44c868",
+      "elf_machine": 183
+    },
+    {
+      "path": "lib/arm64-v8a/libdatastore_shared_counter.so",
+      "bytes": 7784,
+      "sha256": "178f89a2c6c9234ddf980dd4cd1f3616186a46b2b932aafa6707abd04c5fd76a",
+      "elf_machine": 183
+    }
+  ],
+  "embedded_metadata": {
+    "META-INF/com/android/build/gradle/app-metadata.properties": "appMetadataVersion=1.1\nandroidGradlePluginVersion=9.3.0\n"
+  }
+}

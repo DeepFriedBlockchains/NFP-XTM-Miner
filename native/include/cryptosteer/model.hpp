@@ -36,7 +36,7 @@ struct Config {
     int retry_limit = 12;
     bool allow_insecure_tls = false;
     std::string developer_wallet;
-    int donation_basis_points = 200;
+    int donation_basis_points = 0;
     std::uint64_t persisted_user_nanos = 0;
     std::uint64_t persisted_donation_nanos = 0;
     Tuning tuning;

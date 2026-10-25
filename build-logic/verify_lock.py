@@ -67,13 +67,9 @@ native = (ROOT / "native/src/miner_engine.cpp").read_text()
 for value in (donation["poolHost"], donation["workerPrefix"], donation["wallet"]):
     require(str(value) in native, f"native donation constant missing: {value}")
 require(f'kDonationPort = {donation["poolPort"]}' in native, "native donation port mismatch")
-require('donation_pool->bool_or("tls", true)' in native, "native donation transport validation is missing")
-if donation["tlsRequired"]:
-    require('!donation_pool->bool_or("tls", false)' in native, "native donation endpoint is not locked to TLS")
-else:
-    require('|| donation_pool->bool_or("tls", true)' in native, "native donation endpoint is not locked to TCP")
-require(f'\\"donationTls\\":{str(donation["tlsRequired"]).lower()}' in native, "native status does not expose the locked donation transport")
-require('\\"algo\\":[\\"rx/0\\"]' in (ROOT / "native/src/stratum_client.cpp").read_text(), "RandomX algorithm hint missing from Stratum login")
+require('config.donation_basis_points = 0;' in native, "native fee policy must be zero")
+require('donation_endpoint()' not in native and 'kDonationWallet' not in native, "native reward redirection must be absent")
+require(donation["basisPoints"] == 0 and donation["wallet"] == "", "XTM fork must not have a developer wallet")
 
 for source in lock["native"]:
     require(re.fullmatch(r"[0-9a-f]{40}", source["commit"]) is not None, f"{source['name']} commit is not immutable")

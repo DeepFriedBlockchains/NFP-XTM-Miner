@@ -7,9 +7,9 @@
     "timestamp": "2026-08-04T18:56:00Z",
     "component": {
       "type": "application",
-      "name": "CryptoSteer XMR Miner",
+      "name": "XTM-MINER",
       "version": "2.2.1",
-      "purl": "pkg:apk/com.thecryptosteer.xmrminer@2.2.1"
+      "purl": "pkg:apk/com.nfprojects.xtmminer@2.2.1"
     }
   },
   "components": [

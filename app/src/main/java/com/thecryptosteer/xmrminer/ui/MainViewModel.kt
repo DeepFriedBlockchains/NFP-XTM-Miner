@@ -97,11 +97,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             localUserNanos + localDonationNanos
         }
         val active = if (signedIn) control.account.accountActiveUserNanos.coerceAtLeast(0L) else localActiveNanos
-        val basis = if (signedIn) control.account.currentDonationBasisPoints else BuildConfig.DONATION_BASIS_POINTS
+        val basis = 0
         DonationTierUiState(
             basisPoints = basis,
             activeUserNanos = active,
-            remainingNanos = (BuildConfig.DONATION_REDUCTION_THRESHOLD_NANOS - active).coerceAtLeast(0L),
+            remainingNanos = 0L,
             accountScoped = signedIn,
         )
     }.stateIn(viewModelScope, SharingStarted.Eagerly, DonationTierUiState())
@@ -493,7 +493,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             val targetSeconds = 300
             val startedAt = SystemClock.elapsedRealtime()
             val powerManager = getApplication<Application>().getSystemService(PowerManager::class.java)
-            val wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "CryptoSteer:AutoTune").apply {
+            val wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "XTM-MINER:AutoTune").apply {
                 setReferenceCounted(false)
                 acquire((targetSeconds + 180L) * 1_000L)
             }

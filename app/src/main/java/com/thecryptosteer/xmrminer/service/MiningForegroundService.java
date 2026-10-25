@@ -108,7 +108,7 @@ public final class MiningForegroundService extends Service implements NativeCall
         powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         thermalStatus = powerManager.getCurrentThermalStatus();
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "CryptoSteer:ActiveMining");
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "XTM-MINER:ActiveMining");
         wakeLock.setReferenceCounted(false);
         registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED), Context.RECEIVER_NOT_EXPORTED);
         IntentFilter screenFilter = new IntentFilter();
@@ -197,6 +197,7 @@ public final class MiningForegroundService extends Service implements NativeCall
         if (!running.get()) return;
         if (!nativeStarted) {
             pausedByConstraint = automatic;
+            MiningStateBus.appendLog("INFO", automatic ? constraintMessage() : "Paused by user.");
             MiningStateBus.state(MiningState.PAUSED, automatic ? constraintMessage() : "Paused by user.");
             updateNotification();
             return;
@@ -205,7 +206,8 @@ public final class MiningForegroundService extends Service implements NativeCall
             if (NativeMiner.INSTANCE.pause(nativeHandle)) {
                 pausedByConstraint = automatic;
                 releaseWakeLock();
-                MiningStateBus.state(MiningState.PAUSED, automatic ? constraintMessage() : "Paused by user.");
+                MiningStateBus.appendLog("INFO", automatic ? constraintMessage() : "Paused by user.");
+            MiningStateBus.state(MiningState.PAUSED, automatic ? constraintMessage() : "Paused by user.");
                 updateNotification();
             }
         } catch (RuntimeException exception) {
@@ -361,7 +363,7 @@ public final class MiningForegroundService extends Service implements NativeCall
     }
 
     @Override public void onLog(String level, String message) {
-        main.post(() -> MiningStateBus.appendLog(level, message));
+        MiningStateBus.appendLog(level, message);
     }
 
     @Override public void onAccounting(long userNanos, long donationNanos) {
@@ -386,7 +388,7 @@ public final class MiningForegroundService extends Service implements NativeCall
         String pool = snapshot.getActivePool().isBlank() ? "Connecting to pool" : snapshot.getActivePool();
         return new NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_stat_cryptosteer)
-            .setContentTitle("CryptoSteer • " + state)
+            .setContentTitle("XTM-MINER • " + state)
             .setContentText(detail)
             .setStyle(new NotificationCompat.BigTextStyle().bigText(detail + "\n" + pool))
             .setContentIntent(content)

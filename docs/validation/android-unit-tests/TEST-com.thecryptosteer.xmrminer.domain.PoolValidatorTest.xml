@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.thecryptosteer.xmrminer.domain.PoolValidatorTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-10-25T06:42:26.895Z" hostname="Zaq" time="0.022">
+  <properties/>
+  <testcase name="acceptsOptionalWorkerName" classname="com.thecryptosteer.xmrminer.domain.PoolValidatorTest" time="0.02"/>
+  <testcase name="rejectsInvalidPortAndHost" classname="com.thecryptosteer.xmrminer.domain.PoolValidatorTest" time="0.001"/>
+  <testcase name="acceptsTlsPoolWalletAndWorker" classname="com.thecryptosteer.xmrminer.domain.PoolValidatorTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

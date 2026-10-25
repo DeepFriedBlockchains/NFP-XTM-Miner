@@ -131,6 +131,13 @@ void transport_poll_semantics() {
 } // namespace
 
 int main() {
+    cryptosteer::DonationScheduler no_fee(1'000'000ULL * minute, 0, 0);
+    check(no_fee.basis_points() == 0, "zero-fee setting must remain zero");
+    check(!no_fee.donation_due(1), "zero-fee mining must never become due");
+    no_fee.add_user(1'000'000ULL * minute);
+    no_fee.add_donation(minute);
+    check(no_fee.donation_nanos() == 0, "zero-fee scheduler must not account redirected work");
+
     donation_exact_epoch();
     donation_short_sessions_and_restarts();
     donation_corruption_repair();

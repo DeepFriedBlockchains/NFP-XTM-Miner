@@ -8,6 +8,8 @@ import com.thecryptosteer.xmrminer.ui.compactHashrateHistory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import com.thecryptosteer.xmrminer.domain.LogSanitizer
 import org.json.JSONObject
 
 object MiningStateBus {
@@ -111,8 +113,9 @@ object MiningStateBus {
 
     @JvmStatic
     fun appendLog(level: String, message: String) {
-        val safe = redact(message).take(2_000)
-        mutableLogs.value = (mutableLogs.value + LogEntry(System.currentTimeMillis(), level.take(16), safe)).takeLast(500)
+        val safe = LogSanitizer.sanitize(message)
+        val entry = LogEntry(System.currentTimeMillis(), LogSanitizer.sanitize(level).take(16), safe)
+        mutableLogs.update { (it + entry).takeLast(500) }
     }
 
     @JvmStatic
@@ -120,7 +123,4 @@ object MiningStateBus {
         mutableLogs.value = emptyList()
     }
 
-    private fun redact(value: String): String = value
-        .replace(Regex("(?i)(password|pass|token|secret)\\s*[:=]\\s*[^,\\s]+"), "$1=<redacted>")
-        .replace(Regex("4[0-9A-Za-z]{90,110}"), "<wallet-redacted>")
 }

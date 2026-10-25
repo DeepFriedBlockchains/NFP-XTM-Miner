@@ -20,6 +20,7 @@ class CloudApi(private val context: Context) {
     private val baseUrl = BuildConfig.CONTROL_API_BASE_URL
     private val jsonType = "application/json; charset=utf-8".toMediaType()
     val client: OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor { throw IOException("Cloud accounts and remote control are disabled in XTM-MINER.") }
         .connectTimeout(15, TimeUnit.SECONDS)
         .readTimeout(45, TimeUnit.SECONDS)
         .writeTimeout(45, TimeUnit.SECONDS)

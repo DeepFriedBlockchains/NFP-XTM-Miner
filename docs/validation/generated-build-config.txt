@@ -1,0 +1,38 @@
+/**
+ * Automatically generated file. DO NOT MODIFY
+ */
+package com.thecryptosteer.xmrminer;
+
+public final class BuildConfig {
+  public static final boolean DEBUG = Boolean.parseBoolean("true");
+  public static final String APPLICATION_ID = "com.nfprojects.xtmminer.debug";
+  public static final String BUILD_TYPE = "debug";
+  public static final int VERSION_CODE = 20201;
+  public static final String VERSION_NAME = "2.2.1-debug";
+  // Field from default config.
+  public static final String CONTROL_API_BASE_URL = "https://disabled.invalid";
+  // Field from build type: debug
+  public static final String DISTRIBUTION_LABEL = "Debug testing build";
+  // Field from default config.
+  public static final int DONATION_BASIS_POINTS = 0;
+  // Field from default config.
+  public static final String DONATION_POOL_HOST = "";
+  // Field from default config.
+  public static final int DONATION_POOL_PORT = 0;
+  // Field from default config.
+  public static final boolean DONATION_POOL_TLS = false;
+  // Field from default config.
+  public static final long DONATION_REDUCTION_THRESHOLD_NANOS = 0L;
+  // Field from default config.
+  public static final String DONATION_WALLET = "";
+  // Field from default config.
+  public static final String DONATION_WORKER_PREFIX = "";
+  // Field from default config.
+  public static final boolean INSTALLATION_TELEMETRY_ENABLED = false;
+  // Field from default config.
+  public static final int REDUCED_DONATION_BASIS_POINTS = 0;
+  // Field from default config.
+  public static final String RELEASE_PUBLIC_KEY_BASE64 = "";
+  // Field from default config.
+  public static final boolean SELF_UPDATE_ENABLED = false;
+}

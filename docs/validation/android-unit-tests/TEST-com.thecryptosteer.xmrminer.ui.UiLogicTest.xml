@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.thecryptosteer.xmrminer.ui.UiLogicTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-10-25T06:42:26.935Z" hostname="Zaq" time="0.027">
+  <properties/>
+  <testcase name="repeatedHistoryCompactionKeepsSessionBoundaryAndNewestSamples" classname="com.thecryptosteer.xmrminer.ui.UiLogicTest" time="0.016"/>
+  <testcase name="chartDecimationIsBoundedAndKeepsBothEnds" classname="com.thecryptosteer.xmrminer.ui.UiLogicTest" time="0.006"/>
+  <testcase name="supportedRuntimePageSizesAreDescribedWithoutFalseFailure" classname="com.thecryptosteer.xmrminer.ui.UiLogicTest" time="0.0"/>
+  <testcase name="compactHistoryPreservesNewestPointAndBound" classname="com.thecryptosteer.xmrminer.ui.UiLogicTest" time="0.0"/>
+  <testcase name="chartWindowUsesSelectedDuration" classname="com.thecryptosteer.xmrminer.ui.UiLogicTest" time="0.003"/>
+  <testcase name="durationFormattingDoesNotJumpBetweenAmbiguousUnits" classname="com.thecryptosteer.xmrminer.ui.UiLogicTest" time="0.001"/>
+  <testcase name="miningLabelsUseNaturalUserFacingCopy" classname="com.thecryptosteer.xmrminer.ui.UiLogicTest" time="0.0"/>
+  <testcase name="monitoringGaugeFractionsAreBoundedAndMeaningful" classname="com.thecryptosteer.xmrminer.ui.UiLogicTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

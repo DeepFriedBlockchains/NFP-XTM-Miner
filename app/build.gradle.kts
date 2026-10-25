@@ -9,7 +9,7 @@ val signingFilePath = providers.environmentVariable("CRYPTOSTEER_SIGNING_PROPERT
 val signingProps = Properties().apply {
     if (!signingFilePath.isNullOrBlank()) file(signingFilePath).inputStream().use(::load)
 }
-val controlApiBaseUrl = providers.environmentVariable("CRYPTOSTEER_API_BASE_URL").orElse("https://miner-api.thecryptosteer.com").get().trimEnd('/')
+val controlApiBaseUrl = providers.environmentVariable("CRYPTOSTEER_API_BASE_URL").orElse("https://disabled.invalid").get().trimEnd('/')
 val releasePublicKeyBase64 = providers.environmentVariable("CRYPTOSTEER_RELEASE_PUBLIC_KEY_BASE64").orElse("").get().trim()
 
 android {
@@ -19,7 +19,7 @@ android {
     buildToolsVersion = "37.0.0"
 
     defaultConfig {
-        applicationId = "com.thecryptosteer.xmrminer"
+        applicationId = "com.nfprojects.xtmminer"
         minSdk = 36
         targetSdk = 37
         versionCode = 20201
@@ -27,18 +27,18 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         ndk.abiFilters += "arm64-v8a"
-        buildConfigField("String", "DONATION_WALLET", "\"44VNzHZAE1HK3NQZRPeDkMQ8pjDzivtq2eAE4iZLuLaSLZiu3wmCswrCUEm7NnWGMUB4k6cK7p7S7EXfJU7FbVTUMczHdSE\"")
-        buildConfigField("int", "DONATION_BASIS_POINTS", "200")
-        buildConfigField("String", "DONATION_POOL_HOST", "\"gulf.moneroocean.stream\"")
-        buildConfigField("int", "DONATION_POOL_PORT", "10128")
+        buildConfigField("String", "DONATION_WALLET", "\"\"")
+        buildConfigField("int", "DONATION_BASIS_POINTS", "0")
+        buildConfigField("String", "DONATION_POOL_HOST", "\"\"")
+        buildConfigField("int", "DONATION_POOL_PORT", "0")
         buildConfigField("boolean", "DONATION_POOL_TLS", "false")
-        buildConfigField("String", "DONATION_WORKER_PREFIX", "\"CryptoSteer\"")
-        buildConfigField("int", "REDUCED_DONATION_BASIS_POINTS", "100")
-        buildConfigField("long", "DONATION_REDUCTION_THRESHOLD_NANOS", "2592000000000000L")
+        buildConfigField("String", "DONATION_WORKER_PREFIX", "\"\"")
+        buildConfigField("int", "REDUCED_DONATION_BASIS_POINTS", "0")
+        buildConfigField("long", "DONATION_REDUCTION_THRESHOLD_NANOS", "0L")
         buildConfigField("String", "CONTROL_API_BASE_URL", "\"$controlApiBaseUrl\"")
         buildConfigField("String", "RELEASE_PUBLIC_KEY_BASE64", "\"$releasePublicKeyBase64\"")
-        buildConfigField("boolean", "SELF_UPDATE_ENABLED", "true")
-        buildConfigField("boolean", "INSTALLATION_TELEMETRY_ENABLED", "true")
+        buildConfigField("boolean", "SELF_UPDATE_ENABLED", "false")
+        buildConfigField("boolean", "INSTALLATION_TELEMETRY_ENABLED", "false")
         buildConfigField("String", "DISTRIBUTION_LABEL", "\"Direct signed release\"")
         externalNativeBuild {
             cmake {
@@ -70,6 +70,7 @@ android {
 
     buildTypes {
         debug {
+            buildConfigField("String", "DISTRIBUTION_LABEL", "\"Debug testing build\"")
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
             isJniDebuggable = true

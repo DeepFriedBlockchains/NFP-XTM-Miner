@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 
 ARCHIVE_TIME = (2026, 8, 5, 0, 0, 0)
-GENERATED_DIR_NAMES = {".git", ".gradle", ".idea", "build", ".cxx", ".host-test-build", "__pycache__"}
+GENERATED_DIR_NAMES = {".git", ".gradle", ".kotlin", ".idea", "build", ".cxx", ".host-test-build", "__pycache__"}
 PROJECT_SECRET_SUFFIXES = {
     ".apk", ".aab", ".class", ".o", ".so", ".a", ".keystore", ".jks",
     ".p12", ".pfx", ".pem", ".key", ".pyc",

@@ -1,0 +1,189 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+
+> Configure project :app
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+WARNING: C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+C/C++: Platform version 36 is beyond 35, the maximum API level supported by this NDK. Using 35 instead.
+
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:generateDebugRFile UP-TO-DATE
+> Task :app:compileDebugKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:bundleDebugClassesToRuntimeJar UP-TO-DATE
+> Task :app:bundleDebugClassesToCompileJar UP-TO-DATE
+> Task :app:preDebugUnitTestBuild UP-TO-DATE
+> Task :app:compileDebugUnitTestKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :app:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:packageDebugUnitTestForUnitTest UP-TO-DATE
+> Task :app:mergeDebugUnitTestManifest UP-TO-DATE
+> Task :app:processDebugUnitTestManifest UP-TO-DATE
+> Task :app:generateDebugUnitTestConfig UP-TO-DATE
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :app:processDebugUnitTestJavaRes UP-TO-DATE
+> Task :app:testDebugUnitTest UP-TO-DATE
+> Task :app:preDebugAndroidTestBuild SKIPPED
+> Task :app:generateDebugAndroidTestLintModel UP-TO-DATE
+> Task :app:extractProguardFiles UP-TO-DATE
+> Task :app:generateDebugLintReportModel UP-TO-DATE
+> Task :app:generateDebugUnitTestLintModel UP-TO-DATE
+> Task :app:lintAnalyzeDebug
+> Task :app:lintAnalyzeDebugAndroidTest UP-TO-DATE
+> Task :app:lintAnalyzeDebugUnitTest UP-TO-DATE
+
+> Task :app:lintReportDebug
+Wrote HTML report to file:///tmp/nfp-xtm-source/app/build/reports/lint-results-debug.html
+Wrote SARIF report to file:///tmp/nfp-xtm-source/app/build/reports/lint-results-debug.sarif
+
+> Task :app:lintDebug
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:compressDebugAssets
+> Task :app:generateDebugGlobalSynthetics
+> Task :app:mergeDebugJavaResource
+> Task :app:checkDebugDuplicateClasses
+> Task :app:desugarDebugFileDependencies
+> Task :app:mergeExtDexDebug
+> Task :app:mergeLibDexDebug
+> Task :app:dexBuilderDebug
+> Task :app:mergeProjectDexDebug
+
+> Task :app:configureCMakeDebug[arm64-v8a]
+[CXX5304] Observed package id 'platforms;android-37.0' in inconsistent location '/tmp/nfp-xtm-sdk/platforms/android-37' (Expected '/tmp/nfp-xtm-sdk/platforms/android-37.0')
+Add android.sync.suppressAgpWarnings=EXTERNAL_NATIVE_BUILD_CONFIGURATION to the gradle.properties file to suppress this warning.
+[CXX5304] Observed package id 'platforms;android-37.0' in inconsistent location '/tmp/nfp-xtm-sdk/platforms/android-37' (Expected '/tmp/nfp-xtm-sdk/platforms/android-37.0')
+C/C++: CMake Warning:
+C/C++:   Manually-specified variables were not used by the project:
+C/C++:     CRYPTOSTEER_ENABLE_TEST_HOOKS
+
+> Task :app:buildCMakeDebug[arm64-v8a]
+> Task :app:mergeDebugJniLibFolders
+> Task :app:mergeDebugNativeLibs
+> Task :app:stripDebugDebugSymbols
+> Task :app:validateSigningDebug
+> Task :app:writeDebugAppMetadata
+> Task :app:writeDebugSigningConfigVersions
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect
+> Task :app:assembleDebug
+> Task :app:mergeDebugAndroidTestManifest
+> Task :app:processDebugAndroidTestManifest
+> Task :app:generateDebugAndroidTestBuildConfig
+> Task :app:generateDebugAndroidTestResources
+> Task :app:packageDebugAndroidTestResources
+> Task :app:processDebugAndroidTestNavigationResources
+> Task :app:parseDebugAndroidTestLocalResources
+> Task :app:generateDebugAndroidTestRFile
+
+> Task :app:compileDebugAndroidTestKotlin
+w: file:///tmp/nfp-xtm-source/app/src/androidTest/java/com/thecryptosteer/xmrminer/ui/CryptoSteerUiSmokeTest.kt:12:23 'fun createComposeRule(effectContext: CoroutineContext = ...): ComposeContentTestRule' is deprecated. Use `androidx.compose.ui.test.junit4.v2.createComposeRule` instead. The v2 APIs use StandardTestDispatcher instead of UnconfinedTestDispatcher, which aligns with standard coroutine behavior by queuing tasks rather than executing them immediately. Tests relying on immediate execution may require explicit synchronization. Please refer to the migration guide for more details.
+
+> Task :app:javaPreCompileDebugAndroidTest FROM-CACHE
+> Task :app:compileDebugAndroidTestJavaWithJavac
+> Task :app:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :app:mergeDebugAndroidTestAssets
+> Task :app:compressDebugAndroidTestAssets
+> Task :app:generateDebugAndroidTestGlobalSynthetics FROM-CACHE
+> Task :app:processDebugAndroidTestJavaRes
+> Task :app:mergeDebugAndroidTestJavaResource
+> Task :app:checkDebugAndroidTestDuplicateClasses
+> Task :app:desugarDebugAndroidTestFileDependencies FROM-CACHE
+> Task :app:mergeExtDexDebugAndroidTest
+> Task :app:mergeLibDexDebugAndroidTest FROM-CACHE
+> Task :app:checkDebugAndroidTestAarMetadata
+> Task :app:mapDebugAndroidTestSourceSetPaths
+> Task :app:compileDebugAndroidTestNavigationResources FROM-CACHE
+> Task :app:mergeDebugAndroidTestResources
+> Task :app:processDebugAndroidTestResources
+> Task :app:dexBuilderDebugAndroidTest
+> Task :app:mergeProjectDexDebugAndroidTest
+> Task :app:mergeDebugAndroidTestJniLibFolders
+> Task :app:mergeDebugAndroidTestNativeLibs NO-SOURCE
+> Task :app:stripDebugAndroidTestDebugSymbols NO-SOURCE
+> Task :app:validateSigningDebugAndroidTest
+> Task :app:writeDebugAndroidTestSigningConfigVersions
+> Task :app:packageDebugAndroidTest
+> Task :app:createDebugAndroidTestApkListingFileRedirect
+> Task :app:assembleDebugAndroidTest
+w: Detected multiple Kotlin daemon sessions at
+
+[Incubating] Problems report is available at: file:///tmp/nfp-xtm-source/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 5m 33s
+91 actionable tasks: 49 executed, 5 from cache, 37 up-to-date

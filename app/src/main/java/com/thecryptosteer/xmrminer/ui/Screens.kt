@@ -25,6 +25,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material.icons.automirrored.outlined.List
+import androidx.compose.material.icons.outlined.DeveloperBoard
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.AutoFixHigh
 import androidx.compose.material.icons.outlined.BarChart
@@ -131,7 +132,7 @@ fun MiningDetailsScreen(
             item {
                 EmptyState(
                     title = "No active mining session",
-                    message = "Start mining from the Dashboard to see pool, engine, donation, and per-worker details.",
+                    message = "Start mining from the Dashboard to see pool, engine, and per-worker details.",
                     icon = Icons.Outlined.Memory,
                 )
             }
@@ -193,10 +194,10 @@ fun MiningDetailsScreen(
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                 ) {
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                        SectionHeader("Donation accounting", "2.00% initially; 1.00% after 30 days of signed-in account mining")
-                        DefinitionRow("Actual session percentage", "%.6f%%".format(Locale.US, snapshot.donationPercent))
+                        SectionHeader("User mining accounting", "No developer mining or reward redirection")
+                        DefinitionRow("Developer mining fee", "0%")
                         DefinitionRow("User mining time", formatNanos(snapshot.userMiningNanos))
-                        DefinitionRow("Donation mining time", formatNanos(snapshot.donationMiningNanos))
+                        DefinitionRow("Reward redirection", "Disabled")
                         DefinitionRow("Connection", if (snapshot.state == MiningState.MINING_DONATION) "Donation mining" else if (donationFailure == null) "Idle" else "Last connection failed", tone = if (donationFailure == null) StatusTone.NEUTRAL else StatusTone.WARNING)
                     }
                 }
@@ -273,7 +274,7 @@ fun PoolProfilesScreen(profiles: List<PoolProfile>, viewModel: MainViewModel) {
                         onClick = {
                             editing = PoolProfile(
                                 name = "",
-                                primary = PoolEndpoint("", 10128, false),
+                                primary = PoolEndpoint("xtm-rx.kryptex.network", 7038, false),
                                 username = "",
                                 defaultProfile = profiles.isEmpty(),
                             )
@@ -298,7 +299,7 @@ fun PoolProfilesScreen(profiles: List<PoolProfile>, viewModel: MainViewModel) {
                     onAction = {
                         editing = PoolProfile(
                             name = "",
-                            primary = PoolEndpoint("", 10128, false),
+                            primary = PoolEndpoint("xtm-rx.kryptex.network", 7038, false),
                             username = "",
                             defaultProfile = true,
                         )
@@ -349,7 +350,7 @@ fun PoolProfilesScreen(profiles: List<PoolProfile>, viewModel: MainViewModel) {
         item {
             ExpandableTechnicalDetails(
                 title = "Import or export",
-                summary = "Validated CryptoSteer profile JSON",
+                summary = "Validated XTM-MINER profile JSON",
             ) {
                 OutlinedTextField(
                     value = importText,
@@ -444,15 +445,15 @@ private fun PoolProfileEditorDialog(
         title = { Text(if (original.name.isBlank()) "Add pool profile" else "Edit ${original.name}") },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text("Only the pool host, port, wallet, and worker are required.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("Enter a Tari RandomX pool and your own Tari mainnet Base58 wallet. Worker name is optional.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 OutlinedTextField(host, { host = it.take(512) }, label = { Text("Pool URL or host") }, modifier = Modifier.fillMaxWidth(), singleLine = true)
                 OutlinedTextField(port, { port = it.filter(Char::isDigit).take(5) }, label = { Text("Pool port") }, modifier = Modifier.fillMaxWidth(), singleLine = true)
-                OutlinedTextField(wallet, { wallet = it.trim().take(512) }, label = { Text("Wallet address or pool username") }, modifier = Modifier.fillMaxWidth(), singleLine = true)
+                OutlinedTextField(wallet, { wallet = it.trim().take(512) }, label = { Text("Tari mainnet Base58 wallet address") }, modifier = Modifier.fillMaxWidth(), singleLine = true)
                 OutlinedTextField(
                     worker,
                     { worker = it.filterNot(Char::isWhitespace).take(128) },
                     label = { Text("Worker name") },
-                    supportingText = { Text("Used automatically as the pool password and rig ID.") },
+                    supportingText = { Text("Optional worker label; Kryptex uses wallet/worker login.") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                 )
@@ -886,6 +887,7 @@ private fun TuningSection(title: String, subtitle: String, content: @Composable 
 
 @Composable
 fun MoreScreen(
+    onDevice: () -> Unit,
     onBenchmark: () -> Unit,
     onStatistics: () -> Unit,
     onDiagnostics: () -> Unit,
@@ -896,12 +898,13 @@ fun MoreScreen(
     onTroubleshooting: () -> Unit,
 ) {
     val items = listOf(
+        MoreItem("Device", "CPU, memory, battery, thermal and native capabilities.", Icons.Outlined.DeveloperBoard, onDevice),
         MoreItem("Benchmark", "Measure local RandomX performance without connecting to a pool.", Icons.Outlined.Timer, onBenchmark),
-        MoreItem("Statistics", "Session history, acceptance rate, latency, thermal time, and donation time.", Icons.Outlined.BarChart, onStatistics),
+        MoreItem("Statistics", "Session history, acceptance rate, latency, and thermal time.", Icons.Outlined.BarChart, onStatistics),
         MoreItem("Diagnostics", "Structured native, parser, TLS, and page-size correctness checks.", Icons.Outlined.BugReport, onDiagnostics),
         MoreItem("Logs", "Searchable bounded event history with severity and category filters.", Icons.Outlined.Terminal, onLogs),
         MoreItem("Application settings", "Runtime, foreground-service, privacy, and system-theme behavior.", Icons.Outlined.Settings, onSettings),
-        MoreItem("About", "Version, build, donation disclosure, and native compatibility.", Icons.Outlined.Info, onAbout),
+        MoreItem("About", "Version, build, zero-fee policy, and native compatibility.", Icons.Outlined.Info, onAbout),
         MoreItem("Privacy and data", "What remains on device and which network endpoints are contacted.", Icons.Outlined.PrivacyTip, onPrivacy),
         MoreItem("Troubleshooting", "Actionable guidance for pool, thermal, memory, and service issues.", Icons.Outlined.HelpOutline, onTroubleshooting),
     )
@@ -995,7 +998,7 @@ fun BenchmarkScreen(
             }
             item {
                 SecondaryActionButton("Share JSON report", {
-                    shareText(context, "CryptoSteer benchmark report", results.joinToString(prefix = "[", postfix = "]") { it.toString() })
+                    shareText(context, "XTM-MINER benchmark report", results.joinToString(prefix = "[", postfix = "]") { it.toString() })
                 }, icon = Icons.Outlined.Share)
             }
         }
@@ -1102,7 +1105,7 @@ fun DiagnosticsScreen(snapshot: MiningSnapshot, diagnosticsState: DiagnosticsUiS
             item {
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     SecondaryActionButton("Copy report", { clipboard.setText(AnnotatedString(diagnosticsState.reportJson)) }, Modifier.weight(1f), Icons.Outlined.ContentCopy)
-                    SecondaryActionButton("Share report", { shareText(context, "CryptoSteer diagnostics", diagnosticsState.reportJson) }, Modifier.weight(1f), Icons.Outlined.Share)
+                    SecondaryActionButton("Share report", { shareText(context, "XTM-MINER diagnostics", diagnosticsState.reportJson) }, Modifier.weight(1f), Icons.Outlined.Share)
                 }
             }
         }
@@ -1115,113 +1118,15 @@ private enum class LogFilter(val label: String) { ALL("All"), INFO("Info"), WARN
 private data class GroupedLog(val entry: LogEntry, val count: Int)
 
 @Composable
-fun LogsScreen(logs: List<LogEntry>, clear: () -> Unit) {
-    var filter by rememberSaveable { mutableStateOf(LogFilter.ALL) }
-    var query by rememberSaveable { mutableStateOf("") }
-    var paused by rememberSaveable { mutableStateOf(false) }
-    var frozen by remember { mutableStateOf<List<LogEntry>>(emptyList()) }
-    var confirmClear by remember { mutableStateOf(false) }
-    val clipboard = LocalClipboardManager.current
-    val context = LocalContext.current
-    val latestLogs by rememberUpdatedState(logs)
-    val source = if (paused) frozen else logs
-    val filtered = remember(source, filter, query) {
-        source.asReversed().filter { entry ->
-            val message = entry.message.lowercase()
-            val level = entry.level.uppercase()
-            val matchesQuery = query.isBlank() || message.contains(query.lowercase()) || level.contains(query.uppercase())
-            val matchesFilter = when (filter) {
-                LogFilter.ALL -> true
-                LogFilter.INFO -> level == "INFO" || level == "SUCCESS"
-                LogFilter.WARNINGS -> level == "WARN" || level == "WARNING"
-                LogFilter.ERRORS -> level == "ERROR" || level == "CRITICAL"
-                LogFilter.POOL -> message.contains("pool") || message.contains("stratum") || message.contains("connect")
-                LogFilter.MINING -> message.contains("mining") || message.contains("hash") || message.contains("job")
-                LogFilter.THERMAL -> message.contains("thermal") || message.contains("temperature") || message.contains("cool")
-                LogFilter.DONATION -> message.contains("donation")
-                LogFilter.NATIVE -> message.contains("native") || message.contains("randomx") || message.contains("jit")
-            }
-            matchesQuery && matchesFilter
-        }
-    }
-    val grouped = remember(filtered) { groupLogs(filtered) }
-    val visibleText = remember(grouped) {
-        grouped.joinToString("\n") { item ->
-            "${DateFormat.getDateTimeInstance().format(Date(item.entry.timeMillis))} ${item.entry.level} ${item.entry.message}${if (item.count > 1) " ×${item.count}" else ""}"
-        }
-    }
-
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = pagePadding, verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        item {
-            ScreenHeader(
-                title = "Logs",
-                subtitle = "Local bounded event history; credentials and full wallet strings are redacted.",
-                action = {
-                    IconButton(onClick = { confirmClear = true }) { Icon(Icons.Outlined.Delete, "Clear logs", tint = MaterialTheme.colorScheme.error) }
-                },
-            )
-        }
-        item {
-            OutlinedTextField(
-                value = query,
-                onValueChange = { query = it.take(100) },
-                label = { Text("Search logs") },
-                leadingIcon = { Icon(Icons.Outlined.Search, null) },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-            )
-        }
-        item { SegmentedSelector(LogFilter.entries, filter, { it.label }) { filter = it } }
-        item {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                SecondaryActionButton(
-                    label = if (paused) "Resume live list" else "Pause live list",
-                    icon = if (paused) Icons.Outlined.PlayArrow else Icons.Outlined.Pause,
-                    modifier = Modifier.weight(1f),
-                    onClick = {
-                        if (!paused) frozen = latestLogs
-                        paused = !paused
-                    },
-                )
-                SecondaryActionButton("Copy visible", { clipboard.setText(AnnotatedString(visibleText)) }, Modifier.weight(1f), Icons.Outlined.ContentCopy, enabled = grouped.isNotEmpty())
-                IconButton(onClick = { shareText(context, "CryptoSteer logs", visibleText) }, enabled = grouped.isNotEmpty()) { Icon(Icons.Outlined.Share, "Share visible logs") }
-            }
-        }
-        if (logs.lastOrNull { it.message.contains("Donation pool connection failed", true) } != null) {
-            item { InlineWarningBanner("Donation connection warning", "User mining continues. Donation time is not increased to compensate, and repeated identical warnings are grouped below.") }
-        }
-        if (grouped.isEmpty()) {
-            item { EmptyState("No matching log entries", if (logs.isEmpty()) "Events will appear after the app or miner performs work." else "Change the search or filter to see other events.", icon = Icons.AutoMirrored.Outlined.List) }
-        } else {
-            items(grouped, key = { "${it.entry.timeMillis}:${it.entry.message}" }) { item ->
-                LogEntryRow(item.entry, item.count)
-                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-            }
-        }
-    }
-
-    if (confirmClear) {
-        AlertDialog(
-            onDismissRequest = { confirmClear = false },
-            title = { Text("Clear local logs?") },
-            text = { Text("This removes the bounded on-device event history. It does not change mining settings or accounting.") },
-            confirmButton = {
-                TextButton(onClick = { clear(); confirmClear = false }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text("Clear") }
-            },
-            dismissButton = { TextButton(onClick = { confirmClear = false }) { Text("Cancel") } },
-        )
-    }
-}
-
-@Composable
-fun SettingsScreen(snapshot: MiningSnapshot) {
+fun SettingsScreen(snapshot: MiningSnapshot, onOpenLogs: () -> Unit) {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = pagePadding, verticalArrangement = Arrangement.spacedBy(10.dp)) {
         item { ScreenHeader("Application settings", "Release and runtime behavior") }
+        item { NavigationFeatureCard(Icons.Outlined.Terminal, "Mining Terminal / Live Logs", "Live engine, pool, share and safeguard events.", "Open", StatusTone.NEUTRAL, onOpenLogs) }
         item {
             OutlinedCard(Modifier.fillMaxWidth(), colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface), border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     SectionHeader("Appearance")
-                    DefinitionRow("Theme", "Follows Android light or dark mode")
+                    DefinitionRow("Theme", "Tari dark purple with purple-to-pink accents")
                     DefinitionRow("Live UI refresh", "Stable readable sampling")
                     DefinitionRow("Navigation", "Bottom bar, rail, or persistent panel")
                 }
@@ -1253,8 +1158,8 @@ fun AboutScreen(snapshot: MiningSnapshot, donationTier: DonationTierUiState) {
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.28f)),
             ) {
                 Column(Modifier.padding(22.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("CryptoSteer XMR Miner", style = MaterialTheme.typography.headlineLarge)
-                    Text("THE CRYPTO STEER LLC • Advanced Android XMR Miner", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("XTM-MINER", style = MaterialTheme.typography.headlineLarge)
+                    Text("NFProjects • Kasual Labz • Tari (XTM) Android Miner", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     StatusChip("Version ${BuildConfig.VERSION_NAME}", StatusTone.ACTION)
                 }
             }
@@ -1274,16 +1179,15 @@ fun AboutScreen(snapshot: MiningSnapshot, donationTier: DonationTierUiState) {
         item {
             OutlinedCard(Modifier.fillMaxWidth(), colors = CardDefaults.outlinedCardColors(containerColor = MaterialTheme.colorScheme.surface), border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    SectionHeader(donationTier.percentLabel, "Current developer contribution")
+                    SectionHeader("0% developer mining", "All hashing uses your configured wallet")
                     DefinitionRow("Current target", donationTier.percentLabel)
                     DefinitionRow("Actual cumulative ratio", "%.6f%%".format(Locale.US, snapshot.donationPercent))
-                    DefinitionRow("Tier progress", if (donationTier.basisPoints <= BuildConfig.REDUCED_DONATION_BASIS_POINTS) "1% lifetime tier unlocked" else "${formatNanos(donationTier.remainingNanos)} of active mining remains")
-                    DefinitionRow("Progress scope", if (donationTier.accountScoped) "Combined across this signed-in account's approved rigs" else "Sign in to combine progress across rigs")
-                    Text(BuildConfig.DONATION_WALLET, style = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
-        item { Text("© 2026 THE CRYPTO STEER LLC. Licensed under Apache-2.0. No advertisements or third-party analytics SDKs are included. Optional account and remote-control data is limited to approved rigs on the signed-in account.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        item { AboutDonationCard() }
+        item { Text("Developed by Kasual Labz • Published by NFProjects", style = MaterialTheme.typography.bodyMedium) }
+        item { Text("© 2026 THE CRYPTO STEER LLC. Licensed under Apache-2.0. No advertisements or third-party analytics SDKs are included. Original upstream attribution retained. Upstream accounts and remote control are disabled in this fork.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant) }
     }
 }
 
@@ -1291,9 +1195,9 @@ fun AboutScreen(snapshot: MiningSnapshot, donationTier: DonationTierUiState) {
 fun PrivacyScreen() {
     LazyColumn(Modifier.fillMaxSize(), contentPadding = pagePadding, verticalArrangement = Arrangement.spacedBy(10.dp)) {
         item { ScreenHeader("Privacy and data", "Local-first operation with direct pool connections") }
-        item { PrivacyCard("Stored on this device", "Pool profiles, encrypted credentials, tuning preferences, bounded logs, bounded hashrate history, benchmark results, auto-tune results, and donation accounting.", Icons.Outlined.Save) }
-        item { PrivacyCard("Network connections", if (BuildConfig.SELF_UPDATE_ENABLED) "The direct release connects to user-selected pools, the disclosed donation pool during contribution periods, and THE CRYPTO STEER LLC control service for signed releases. Optional account features begin only after sign-in." else "The F-Droid build connects to user-selected pools and the disclosed donation pool during contribution periods. It contains no private APK updater. Optional account features begin only after sign-in.", Icons.Outlined.Public) }
-        item { PrivacyCard("Operational telemetry", if (BuildConfig.INSTALLATION_TELEMETRY_ENABLED) "The direct release sends a random installation identifier, app/device version, online state, mining state, and hashrate after disclosure acceptance. No advertising ID, contacts, precise location, or third-party analytics SDK is used." else "The F-Droid build does not send anonymous installation, online-state, mining-state, or hashrate telemetry. Account and remote-control data is sent only after you sign in.", Icons.Outlined.PrivacyTip) }
+        item { PrivacyCard("Stored on this device", "Pool profiles, encrypted credentials, tuning preferences, bounded logs, bounded hashrate history, benchmark results, auto-tune results, and session accounting.", Icons.Outlined.Save) }
+        item { PrivacyCard("Network connections", "Mining connects only to your configured pools. XTM-MINER cloud accounts, remote controls and the private updater are disabled in this fork.", Icons.Outlined.Public) }
+        item { PrivacyCard("Operational telemetry", "Installation and mining telemetry are disabled in every build of this fork.", Icons.Outlined.PrivacyTip) }
         item { PrivacyCard("Credentials", "Pool credentials are encrypted with Android Keystore-backed AES-GCM and redacted before logs are displayed.", Icons.Outlined.CheckCircle) }
     }
 }
@@ -1318,9 +1222,9 @@ fun TroubleshootingScreen() {
         "Mining remains paused" to "Review charging, battery threshold, Wi-Fi-only mode, screen-on policy, and Android thermal status in Custom tuning.",
         "Full-memory mode fails" to "RandomX FULL needs substantial available memory. Close other heavy apps or use Light mode.",
         "No accepted shares yet" to "Mobile hashrate and pool difficulty can create long intervals. Confirm that a pool job is active and monitor latency and logs.",
-        "Donation connection fails" to "User mining continues and the fee is not increased to compensate. The app retries the disclosed contribution connection automatically.",
+        "Pool rejects the wallet" to "Use a Tari mainnet Base58 wallet supporting one-sided payouts, and check your pool's address requirements.",
         "JIT unavailable" to "The engine uses its safe interpreter path when executable-memory transitions are unavailable.",
-        "Android stops the service" to "Keep the foreground notification visible and review system battery restrictions. CryptoSteer does not bypass Android process controls.",
+        "Android stops the service" to "Keep the foreground notification visible and review system battery restrictions. XTM-MINER does not bypass Android process controls.",
     )
     LazyColumn(Modifier.fillMaxSize(), contentPadding = pagePadding, verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item { ScreenHeader("Troubleshooting", "Common issues and direct next steps") }

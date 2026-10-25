@@ -54,22 +54,19 @@ fun DisclosureScreen(onAccept: () -> Unit) {
                         Box(Modifier.size(42.dp), contentAlignment = Alignment.Center) { Icon(Icons.Outlined.Memory, null, tint = MaterialTheme.colorScheme.primary) }
                     }
                     Text(
-                        "RandomX is sustained high-load computation. Review these operating and donation disclosures before enabling the miner.",
+                        "RandomX is sustained high-load computation. Review these operating disclosures before enabling the miner.",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
             DisclosureRow(Icons.Outlined.Thermostat, "Heat and battery", "Mining produces heat, consumes substantial power, can trigger Android thermal throttling, and may accelerate battery wear during prolonged maximum-load operation.", StatusTone.WARNING)
-            DisclosureRow(Icons.Outlined.WarningAmber, "User control", "Use CryptoSteer only on hardware you own or are authorized to operate. You can pause or stop mining from the app and foreground notification.", StatusTone.ACTION)
-            DisclosureRow(Icons.Outlined.CheckCircle, "Developer donation", "The disclosed developer contribution starts at 2.00% of active mining time. For signed-in accounts it automatically becomes 1.00% after 30 days of combined user-mining time across approved rigs. Paused, disconnected, setup, and benchmark time are excluded.", StatusTone.HEALTHY)
+            DisclosureRow(Icons.Outlined.WarningAmber, "User control", "Use XTM-MINER only on hardware you own or are authorized to operate. You can pause or stop mining from the app and foreground notification.", StatusTone.ACTION)
+            DisclosureRow(Icons.Outlined.CheckCircle, "Your mining rewards", "This fork performs no developer mining. All submitted shares use the Tari wallet you configure. Pool fees and payout rules are set by your chosen pool.", StatusTone.HEALTHY)
             if (BuildConfig.INSTALLATION_TELEMETRY_ENABLED) {
                 DisclosureRow(Icons.Outlined.CheckCircle, "Operational telemetry", "After acceptance, the direct release sends a random installation identifier, app/device version, online state, mining state, and hashrate to THE CRYPTO STEER LLC control service. It does not send an advertising ID, contacts, or precise location, and account settings or logs are not sent unless you sign in.", StatusTone.ACTION)
             } else {
-                DisclosureRow(Icons.Outlined.CheckCircle, "F-Droid privacy", "This build does not send anonymous installation or mining telemetry and does not contain the private APK updater. Optional account and remote-control network access begins only when you choose to sign in.", StatusTone.HEALTHY)
-            }
-            ExpandableTechnicalDetails("Donation wallet", summary = "Compiled into this signed build") {
-                Text(BuildConfig.DONATION_WALLET, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                DisclosureRow(Icons.Outlined.CheckCircle, "Local privacy", "Upstream cloud accounts, remote control, installation telemetry and the private APK updater are disabled in this fork.", StatusTone.HEALTHY)
             }
             Surface(
                 modifier = Modifier.fillMaxWidth().monitoringPanel(if (confirmed) CryptoSteerThemeTokens.colors.healthy else MaterialTheme.colorScheme.primary),
@@ -79,7 +76,7 @@ fun DisclosureScreen(onAccept: () -> Unit) {
             ) {
                 Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = confirmed, onCheckedChange = { confirmed = it })
-                    Text("I understand and accept these operating, privacy, and donation disclosures.", Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
+                    Text("I understand and accept these operating and privacy disclosures.", Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
                 }
             }
             PrimaryActionButton(

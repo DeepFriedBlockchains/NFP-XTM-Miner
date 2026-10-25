@@ -75,6 +75,7 @@ object PoolConnectionTester {
         val blob = job.optString("blob")
         val seed = job.optString("seed_hash", job.optString("seedHash"))
         val target = job.optString("target")
+        require(job.optString("algo", "rx/0") == "rx/0") { "Pool job is not standard Tari RandomX (rx/0)." }
         val jobId = job.optString("job_id", job.optString("jobId"))
         require(blob.isNotBlank() && seed.isNotBlank() && target.isNotBlank() && jobId.isNotBlank()) {
             "The pool job is missing blob, seed hash, target, or job ID."
@@ -82,6 +83,9 @@ object PoolConnectionTester {
         require(blob.length % 2 == 0 && seed.length == 64 && blob.all { isAsciiHexDigit(it) } && seed.all { isAsciiHexDigit(it) }) {
             "The pool returned malformed RandomX job data."
         }
+        val nonceOffset = job.optInt("nonce_offset", 39)
+        require(nonceOffset >= 0 && nonceOffset.toLong() + 4 <= blob.length / 2) { "Pool nonce offset is outside the job blob." }
+        require(target.length in listOf(8, 16, 64) && target.all { isAsciiHexDigit(it) } && target.any { it != '0' }) { "Pool target is malformed or unsupported." }
         return LiveJob(
             endpoint = "${endpoint.host}:${endpoint.port}",
             tls = endpoint.tls,
@@ -91,7 +95,7 @@ object PoolConnectionTester {
             blobHex = blob,
             seedHashHex = seed,
             targetHex = target,
-            nonceOffset = job.optInt("nonce_offset", 39).coerceAtLeast(0),
+            nonceOffset = nonceOffset,
             height = job.optLong("height", 0L).coerceAtLeast(0L),
         )
     }
@@ -123,7 +127,7 @@ object PoolConnectionTester {
                 put("params", JSONObject().apply {
                     put("login", username)
                     put("pass", password.ifBlank { worker.ifBlank { "x" } })
-                    put("agent", "CryptoSteer/${BuildConfig.VERSION_NAME}")
+                    put("agent", "XTM-MINER/${BuildConfig.VERSION_NAME}")
                     put("algo", JSONArray().put("rx/0"))
                     if (worker.isNotBlank()) put("rigid", worker)
                 })

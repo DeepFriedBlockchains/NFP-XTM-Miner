@@ -80,7 +80,7 @@ fun UpdateRequiredScreen(
                             Text("Check again")
                         }
                     }
-                    Text("The APK is downloaded inside CryptoSteer, checked against the signed hash and release manifest, then handed to Android’s protected package installer.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("The APK is downloaded inside XTM-MINER, checked against the signed hash and release manifest, then handed to Android’s protected package installer.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }

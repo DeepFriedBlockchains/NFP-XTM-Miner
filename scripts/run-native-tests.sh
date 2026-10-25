@@ -8,3 +8,5 @@ rm -rf "$BUILD"
 cmake -S "$ROOT/native/tests" -B "$BUILD" -G Ninja -DCMAKE_BUILD_TYPE=Release
 cmake --build "$BUILD"
 "$BUILD/cryptosteer_host_tests"
+
+"$BUILD/xtm_stratum_tests"

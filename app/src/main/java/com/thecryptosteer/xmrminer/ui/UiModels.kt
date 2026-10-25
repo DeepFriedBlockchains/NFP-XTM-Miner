@@ -49,9 +49,9 @@ fun defaultDiagnosticChecks(): List<DiagnosticCheckState> = listOf(
 
 @Immutable
 data class DonationTierUiState(
-    val basisPoints: Int = 200,
+    val basisPoints: Int = 0,
     val activeUserNanos: Long = 0L,
-    val remainingNanos: Long = 2_592_000_000_000_000L,
+    val remainingNanos: Long = 0L,
     val accountScoped: Boolean = false,
 ) {
     val percentLabel: String get() = "%.2f%%".format(java.util.Locale.US, basisPoints / 100.0)

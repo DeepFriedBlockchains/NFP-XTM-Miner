@@ -11,6 +11,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 
@@ -30,7 +31,7 @@ fun MonitoringBackdrop(
 
 /**
  * Adds the crisp panel outline and optional status-color top rule used throughout the app.
- * This deliberately contains no gradient, shimmer, blur, or sensor-driven behavior.
+ * A Tari gradient highlights the existing panel rule.
  */
 fun Modifier.monitoringPanel(
     accent: Color = Color.Unspecified,
@@ -48,7 +49,7 @@ fun Modifier.monitoringPanel(
         )
         if (accent != Color.Unspecified) {
             drawRect(
-                color = accent,
+                brush = Brush.horizontalGradient(listOf(CryptoSteerColors.BrandOrange, CryptoSteerColors.TariViolet, CryptoSteerColors.TariPink)),
                 topLeft = Offset.Zero,
                 size = androidx.compose.ui.geometry.Size(size.width, topRuleHeightDp.dp.toPx()),
             )

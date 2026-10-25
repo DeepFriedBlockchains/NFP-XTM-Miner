@@ -1,7 +1,1 @@
-CryptoSteer XMR Miner runs a native RandomX mining engine against pools selected by the user. Mining is always user initiated and remains visible through an Android foreground-service notification.
-
-Features include pool profiles and failover, TLS pool connections, live hashrate history, thermal and battery safeguards, tuning profiles, benchmark tools, encrypted pool credentials, and optional account-based remote rig control.
-
-The disclosed developer contribution starts at 2% of active mining time and becomes 1% after 30 cumulative days for signed-in accounts. The F-Droid build does not contain the private APK updater and does not send anonymous installation or mining telemetry.
-
-Mining places sustained load on the processor and can increase heat, power use, and battery wear. Use only devices you own or are authorized to operate.
+XTM-MINER is an experimental NFProjects fork of CryptoSteer XMR Miner for Tari RandomX pools. It retains user-controlled foreground mining, native hash counters, CPU controls and Android thermal/battery safeguards. No application developer mining fee or reward redirection is used. Pool fees may apply. Upstream cloud accounts, remote control, updater and telemetry are disabled. Real-pool and physical-device validation are required before production release. See the repository validation report. Original source attribution and licenses are preserved.

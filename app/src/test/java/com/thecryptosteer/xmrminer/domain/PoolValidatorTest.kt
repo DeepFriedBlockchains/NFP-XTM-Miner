@@ -11,7 +11,7 @@ class PoolValidatorTest {
             PoolProfile(
                 name = "Primary",
                 primary = PoolEndpoint("pool.example.com", 443, true),
-                username = "44VNzHZAE1HK3NQZRPeDkMQ8pjDzivtq2eAE4iZLuLaSLZiu3wmCswrCUEm7NnWGMUB4k6cK7p7S7EXfJU7FbVTUMczHdSE",
+                username = "14AxNmpvVwr4sYxUPhYXnXmcCDsMxu54ZfBjb9EDpV5JBYC2u96kqoXJ99sxsytX8dgp8KVZxJNcanFsPqZSNCvd7Xg",
                 worker = "Pixel10-Max",
             ),
         )
@@ -19,17 +19,16 @@ class PoolValidatorTest {
     }
 
     @Test
-    fun rejectsMissingWorkerName() {
+    fun acceptsOptionalWorkerName() {
         val result = PoolValidator.validate(
             PoolProfile(
                 name = "Missing worker",
                 primary = PoolEndpoint("pool.example.com", 443, true),
-                username = "wallet-or-pool-user",
+                username = "14AxNmpvVwr4sYxUPhYXnXmcCDsMxu54ZfBjb9EDpV5JBYC2u96kqoXJ99sxsytX8dgp8KVZxJNcanFsPqZSNCvd7Xg",
                 worker = "",
             ),
         )
-        assertFalse(result.valid)
-        assertTrue(result.errors.any { it.contains("Worker name") })
+        assertTrue(result.errors.joinToString(), result.valid)
     }
 
     @Test

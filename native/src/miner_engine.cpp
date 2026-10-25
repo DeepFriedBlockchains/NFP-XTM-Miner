@@ -19,11 +19,9 @@
 
 namespace cryptosteer {
 namespace {
-constexpr char kDonationWallet[] = "44VNzHZAE1HK3NQZRPeDkMQ8pjDzivtq2eAE4iZLuLaSLZiu3wmCswrCUEm7NnWGMUB4k6cK7p7S7EXfJU7FbVTUMczHdSE";
-constexpr char kDonationHost[] = "gulf.moneroocean.stream";
-constexpr std::uint16_t kDonationPort = 10128;
-constexpr char kDonationWorkerPrefix[] = "CryptoSteer";
-constexpr std::uint64_t kDonationMinimumSliceNanos = 30'000'000'000ULL;
+constexpr char kDonationHost[] = "";
+constexpr std::uint16_t kDonationPort = 0;
+constexpr char kDonationWorkerPrefix[] = "";
 constexpr std::size_t kMaximumShareQueue = 1024U;
 constexpr int kMaximumThreads = 64;
 constexpr auto kStatsInterval = std::chrono::milliseconds(200);
@@ -94,16 +92,6 @@ std::uint64_t unix_millis_now() {
     return value < 0 ? 0U : static_cast<std::uint64_t>(value);
 }
 
-std::string random_donation_worker() {
-    static constexpr char alphabet[] = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-    std::random_device device;
-    std::array<unsigned int, 14> entropy{};
-    for (auto& value : entropy) value = device();
-    std::string worker = std::string(kDonationWorkerPrefix) + '-';
-    worker.reserve(worker.size() + 14U);
-    for (unsigned int value : entropy) worker.push_back(alphabet[value % (sizeof(alphabet) - 1U)]);
-    return worker;
-}
 } // namespace
 
 Config parse_config(std::string const& json_text) {
@@ -122,20 +110,12 @@ Config parse_config(std::string const& json_text) {
     config.connect_timeout_seconds = static_cast<int>(std::clamp<std::int64_t>(root.i64_or("connectTimeoutSeconds", 15), 5, 120));
     config.retry_limit = static_cast<int>(std::clamp<std::int64_t>(root.i64_or("retryLimit", 12), 0, 1000));
     config.allow_insecure_tls = root.bool_or("allowInsecureTls", false);
-    config.developer_wallet = require_string(root, "developerWallet", 256);
-    if (config.developer_wallet != kDonationWallet) throw std::invalid_argument("donation wallet does not match this signed build");
-    auto donation_pool = root.find("donationPool");
-    if (!donation_pool || !donation_pool->is_object()
-        || donation_pool->string_or("host") != kDonationHost
-        || donation_pool->i64_or("port", 0) != kDonationPort
-        || donation_pool->bool_or("tls", true)
-        || donation_pool->string_or("workerPrefix") != kDonationWorkerPrefix) {
-        throw std::invalid_argument("donation pool configuration does not match this signed build");
-    }
-    config.donation_basis_points = static_cast<int>(std::clamp<std::int64_t>(root.i64_or("donationBasisPoints", 200), 0, 9999));
-    if (config.donation_basis_points != 200 && config.donation_basis_points != 100) throw std::invalid_argument("this build permits only the disclosed 2.00% or earned 1.00% donation tiers");
+    // XTM fork: every share belongs to the user; configuration cannot enable fees.
+    if (root.i64_or("donationBasisPoints", 0) != 0) throw std::invalid_argument("XTM-MINER does not permit developer mining");
+    config.developer_wallet.clear();
+    config.donation_basis_points = 0;
     config.persisted_user_nanos = nonnegative_u64(root, "persistedUserNanos");
-    config.persisted_donation_nanos = nonnegative_u64(root, "persistedDonationNanos");
+    config.persisted_donation_nanos = 0;
 
     auto endpoints = root.find("endpoints");
     if (!endpoints || !endpoints->is_array() || endpoints->as_array().empty() || endpoints->as_array().size() > 16U) {
@@ -255,7 +235,7 @@ bool MinerEngine::pause() {
 }
 
 bool MinerEngine::update_donation_basis_points(int basis_points) {
-    if (basis_points != 100 && basis_points != 200) return false;
+    if (basis_points != 0) return false;
     std::lock_guard lock(lifecycle_mutex_);
     config_.donation_basis_points = basis_points;
     return scheduler_ ? scheduler_->set_basis_points(static_cast<std::uint32_t>(basis_points)) : true;
@@ -308,15 +288,6 @@ int MinerEngine::selected_worker_count() const {
     return std::clamp(requested, 1, std::min(available, kMaximumThreads));
 }
 
-Endpoint MinerEngine::donation_endpoint() const {
-    Endpoint endpoint;
-    endpoint.host = kDonationHost;
-    endpoint.port = kDonationPort;
-    endpoint.tls = false;
-    endpoint.server_name = kDonationHost;
-    return endpoint;
-}
-
 void MinerEngine::safe_state(std::string const& state_name, std::string const& message) noexcept {
     {
         std::lock_guard status_lock(status_mutex_);
@@ -324,6 +295,7 @@ void MinerEngine::safe_state(std::string const& state_name, std::string const& m
         status_message_ = message;
         if (state_name == "MINING_USER" || state_name == "MINING_DONATION" || state_name == "STOPPED") last_error_.clear();
     }
+    safe_log(state_name == "ERROR" ? "ERROR" : "INFO", message);
     try { callbacks_->state(state_name, message); } catch (...) { }
 }
 
@@ -339,6 +311,7 @@ void MinerEngine::clear_work() {
 }
 
 void MinerEngine::install_job(Job job, bool donation) {
+    safe_log("INFO", "New RandomX mining job; share target " + job.target_hex);
     std::shared_ptr<RandomXContext> context;
     bool initialized_new_context = false;
     if (cached_context_ && cached_seed_ == job.seed_hash) {
@@ -377,6 +350,7 @@ void MinerEngine::install_job(Job job, bool donation) {
 }
 
 void MinerEngine::worker_loop(std::size_t index) {
+    safe_log("INFO", "CPU worker " + std::to_string(index) + " started; waiting for mining work");
     if (index < cpu_assignments_.size() && cpu_assignments_[index] >= 0) {
         int rc = cryptosteer_set_current_thread_affinity(cpu_assignments_[index]);
         if (rc != 0) safe_log("WARN", "CPU affinity was unavailable for worker " + std::to_string(index));
@@ -470,7 +444,10 @@ void MinerEngine::drain_shares(StratumClient& client, std::uint64_t generation) 
             runtime_.stale.fetch_add(1, std::memory_order_relaxed);
             continue;
         }
-        try { (void)client.submit(share); }
+        try {
+            (void)client.submit(share);
+            safe_log("INFO", "Share submitted; awaiting pool acceptance");
+        }
         catch (std::exception const& exception) {
             safe_log("WARN", "Share submission failed: " + std::string(exception.what()));
             runtime_.stale.fetch_add(1, std::memory_order_relaxed);
@@ -489,11 +466,10 @@ void MinerEngine::account_elapsed(bool donation, std::chrono::steady_clock::dura
 
 void MinerEngine::control_loop() {
     int failures = 0;
-    int donation_failures = 0;
     std::size_t endpoint_index = 0;
-    auto donation_retry_after = std::chrono::steady_clock::time_point::min();
     auto last_stats = std::chrono::steady_clock::now();
     auto last_accounting_callback = last_stats;
+    auto last_rate_log = last_stats;
     try {
         while (!stop_requested_.load(std::memory_order_acquire)) {
             if (paused_.load(std::memory_order_acquire)) {
@@ -503,26 +479,11 @@ void MinerEngine::control_loop() {
                 work_cv_.wait_for(lock, std::chrono::seconds(1), [this] { return stop_requested_.load() || !paused_.load(); });
                 continue;
             }
-            auto iteration_started = std::chrono::steady_clock::now();
-            bool donation = scheduler_ && scheduler_->donation_due(kDonationMinimumSliceNanos)
-                && iteration_started >= donation_retry_after;
-            std::uint64_t donation_stop_at = 0U;
-            if (donation && scheduler_) {
-                const std::uint64_t budget = std::min(scheduler_->donation_allowance(), kDonationMinimumSliceNanos);
-                donation_stop_at = scheduler_->donation_nanos() + budget;
-            }
-            Endpoint endpoint = donation ? donation_endpoint() : config_.endpoints[endpoint_index % config_.endpoints.size()];
+            Endpoint endpoint = config_.endpoints[endpoint_index % config_.endpoints.size()];
             Config connection_config = config_;
             ScopedPasswordWipe password_wipe(connection_config.password);
-            std::string login = donation ? kDonationWallet : config_.username;
+            std::string login = config_.username;
             std::string rig = !config_.rig_id.empty() ? config_.rig_id : config_.worker;
-            if (donation) {
-                active_donation_worker_ = random_donation_worker();
-                rig = active_donation_worker_;
-                wipe_string(connection_config.password);
-                connection_config.password = active_donation_worker_;
-                connection_config.allow_insecure_tls = false;
-            }
             StratumClient client;
             std::string pool_name = endpoint.host + ":" + std::to_string(endpoint.port);
             {
@@ -531,19 +492,19 @@ void MinerEngine::control_loop() {
             }
             pool_connected_.store(false, std::memory_order_release);
             job_received_.store(false, std::memory_order_release);
-            safe_state("CONNECTING", std::string(donation ? "Connecting donation period to " : "Connecting to ") + pool_name);
+            safe_state("CONNECTING", std::string("Connecting to ") + pool_name);
             try {
                 auto connect_started = std::chrono::steady_clock::now();
                 auto initial_job = client.connect_and_login(connection_config, endpoint, login, rig);
                 runtime_.latency_millis.store(static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - connect_started).count()), std::memory_order_relaxed);
                 pool_connected_.store(true, std::memory_order_release);
+                safe_log("SUCCESS", "Pool connection and login accepted");
                 {
                     std::lock_guard status_lock(status_mutex_);
                     last_error_.clear();
                 }
                 failures = 0;
-                if (donation) donation_failures = 0;
-                if (initial_job) install_job(std::move(*initial_job), donation);
+                if (initial_job) install_job(std::move(*initial_job), false);
                 else safe_state("CONNECTING", "Pool login accepted; waiting for a RandomX job");
                 auto last_tick = std::chrono::steady_clock::now();
                 auto last_keepalive = last_tick;
@@ -552,16 +513,18 @@ void MinerEngine::control_loop() {
                     auto now = std::chrono::steady_clock::now();
                     std::shared_ptr<WorkBundle const> current;
                     { std::lock_guard lock(work_mutex_); current = work_; }
-                    if (current) account_elapsed(donation, now - last_tick);
+                    if (current) account_elapsed(false, now - last_tick);
                     last_tick = now;
-                    if (event.kind == PoolEventKind::Job && event.job) install_job(std::move(*event.job), donation);
+                    if (event.kind == PoolEventKind::Job && event.job) install_job(std::move(*event.job), false);
                     else if (event.kind == PoolEventKind::Accepted) {
                         runtime_.accepted.fetch_add(1, std::memory_order_relaxed);
+                        safe_log("SUCCESS", "Pool accepted share");
                         runtime_.last_accepted_millis.store(unix_millis_now(), std::memory_order_relaxed);
                     } else if (event.kind == PoolEventKind::Rejected) {
                         runtime_.rejected.fetch_add(1, std::memory_order_relaxed);
                         safe_log("WARN", "Pool rejected a request: " + event.message);
-                    } else if (event.kind == PoolEventKind::Message && !event.message.empty()) safe_log("INFO", event.message);
+                    } else if (event.kind == PoolEventKind::Difficulty) safe_log("INFO", "Pool difficulty changed: " + event.message);
+                    else if (event.kind == PoolEventKind::Message && !event.message.empty()) safe_log("INFO", event.message);
                     if (current) drain_shares(client, current->job.generation);
                     if (config_.keep_alive && now - last_keepalive >= std::chrono::seconds(30)) {
                         client.keepalive();
@@ -570,34 +533,33 @@ void MinerEngine::control_loop() {
                     if (now - last_stats >= kStatsInterval) {
                         publish_stats();
                         last_stats = now;
+                        if (now - last_rate_log >= std::chrono::seconds(15)) {
+                            safe_log("INFO", "Hashrate " + std::to_string(smoothed_hashrate_) + " H/s");
+                            last_rate_log = now;
+                        }
                     }
                     if (now - last_accounting_callback >= std::chrono::seconds(10) && scheduler_) {
                         callbacks_->accounting(scheduler_->user_nanos(), scheduler_->donation_nanos());
                         last_accounting_callback = now;
                     }
-                    if (donation && scheduler_ && scheduler_->donation_nanos() >= donation_stop_at) break;
-                    if (!donation && scheduler_ && scheduler_->donation_due(kDonationMinimumSliceNanos)
-                        && now >= donation_retry_after) break;
+
                 }
                 client.close();
+                safe_log("INFO", "Pool connection closed");
                 pool_connected_.store(false, std::memory_order_release);
                 clear_work();
-                if (!donation) endpoint_index = 0;
+                endpoint_index = 0;
             } catch (std::exception const& exception) {
                 client.close();
+                safe_log("INFO", "Pool connection closed");
                 pool_connected_.store(false, std::memory_order_release);
                 clear_work();
-                if (!donation) {
+                {
                     std::lock_guard status_lock(status_mutex_);
                     last_error_ = exception.what();
                 }
-                safe_log(donation ? "WARN" : "ERROR", std::string(donation ? "Donation pool connection failed; returning to user mining without increasing the fee: " : "Pool connection failed: ") + exception.what());
-                if (donation) {
-                    ++donation_failures;
-                    int exponent = std::min(donation_failures, 5);
-                    donation_retry_after = std::chrono::steady_clock::now()
-                        + std::min(std::chrono::seconds(30 * (1 << exponent)), std::chrono::seconds(1800));
-                } else {
+                safe_log("ERROR", std::string("Pool connection failed: ") + exception.what());
+                {
                     ++failures;
                     ++endpoint_index;
                     if (config_.retry_limit > 0 && failures > config_.retry_limit) {
@@ -613,7 +575,7 @@ void MinerEngine::control_loop() {
                     safe_state("CONNECTING", "Retrying the user pool after: " + std::string(exception.what()));
                 }
                 int exponent = std::min(failures, 6);
-                auto delay = donation ? std::chrono::seconds(1) : std::chrono::seconds(1 << exponent);
+                auto delay = std::chrono::seconds(1 << exponent);
                 auto until = std::chrono::steady_clock::now() + std::min(delay, std::chrono::seconds(60));
                 while (!stop_requested_.load(std::memory_order_acquire) && std::chrono::steady_clock::now() < until) std::this_thread::sleep_for(std::chrono::milliseconds(100));
             }

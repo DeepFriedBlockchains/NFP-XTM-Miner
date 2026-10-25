@@ -10,7 +10,7 @@ object PoolValidator {
 
     data class HostInput(val host: String, val tlsHint: Boolean?)
 
-    fun defaultTlsForPort(port: Int): Boolean = port == 443 || port == 20128
+    fun defaultTlsForPort(port: Int): Boolean = port == 443
 
     fun parseHostInput(value: String): HostInput {
         val trimmed = value.trim().removeSuffix("/")
@@ -37,8 +37,8 @@ object PoolValidator {
     fun validate(profile: PoolProfile): Result {
         val errors = mutableListOf<String>()
         if (profile.name.trim().length !in 1..80) errors += "Profile name must be 1–80 characters."
-        if (profile.username.isBlank() || profile.username.length > 512) errors += "Wallet or pool username is required and must be at most 512 characters."
-        if (profile.worker.isBlank() || profile.worker.length > 128) errors += "Worker name is required and must be at most 128 characters."
+        if (!TariWalletValidator.isValid(profile.username)) errors += "Enter a Tari mainnet Base58 wallet with a valid checksum and one-sided payment support. Emoji and hex addresses must first be converted in your wallet."
+        if (!profile.worker.matches(Regex("^[A-Za-z0-9_-]{0,128}$"))) errors += "Optional worker uses letters, numbers, underscores or hyphens (128 maximum)."
         if (profile.rigId.length > 128) errors += "Rig ID must be at most 128 characters."
         if (profile.connectTimeoutSeconds !in 3..120) errors += "Connection timeout must be 3–120 seconds."
         if (profile.retryLimit !in 0..100) errors += "Retry limit must be 0–100."

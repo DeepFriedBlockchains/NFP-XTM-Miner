@@ -42,6 +42,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.semantics.LiveRegionMode
@@ -194,10 +196,10 @@ private fun MiningHero(
                 }
                 ThermalStatusIndicator(snapshot.thermalStatus)
             }
-            Row(verticalAlignment = Alignment.Bottom) {
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.Center) {
                 Text(
-                    text = "%7.1f".format(snapshot.hashrate),
-                    style = MaterialTheme.typography.displayLarge.copy(fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Medium),
+                    text = "%.1f".format(snapshot.hashrate),
+                    style = MaterialTheme.typography.displayLarge.copy(fontWeight = FontWeight.Bold, brush = Brush.horizontalGradient(listOf(CryptoSteerColors.BrandOrange, CryptoSteerColors.TariViolet, CryptoSteerColors.TariPink))),
                     modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
                 )
                 Spacer(Modifier.width(8.dp))
@@ -343,11 +345,11 @@ private fun DashboardMetricGrid(snapshot: MiningSnapshot, columns: Int) {
         DashboardMetric("Average", "%.1f H/s".format(snapshot.averageHashrate), Icons.Outlined.Speed, StatusTone.LIVE, "Session average"),
         DashboardMetric("Session", formatDuration(snapshot.uptimeSeconds), Icons.Outlined.Schedule, StatusTone.NEUTRAL, "Active runtime"),
         DashboardMetric("Accepted", snapshot.accepted.toString(), Icons.Outlined.CheckCircle, StatusTone.HEALTHY, "${snapshot.rejected} rejected • ${snapshot.stale} stale"),
-        DashboardMetric("Latency", if (snapshot.poolLatencyMillis > 0L) "${snapshot.poolLatencyMillis} ms" else "—", Icons.Outlined.CloudQueue, if (snapshot.poolLatencyMillis > 1_000L) StatusTone.WARNING else StatusTone.NEUTRAL, "Pool round trip"),
+        DashboardMetric("Latency", if (snapshot.poolLatencyMillis > 0L) "${snapshot.poolLatencyMillis} ms" else "—", Icons.Outlined.CloudQueue, if (snapshot.poolLatencyMillis > 1_000L) StatusTone.WARNING else StatusTone.NEUTRAL, "Pool login latency"),
         DashboardMetric("Battery", "${snapshot.batteryPercent}%", if (snapshot.charging) Icons.Outlined.BatteryChargingFull else Icons.Outlined.BatteryStd, if (snapshot.batteryPercent <= 20 && !snapshot.charging) StatusTone.WARNING else StatusTone.NEUTRAL, if (snapshot.charging) "Charging" else "On battery"),
         DashboardMetric("Thermal", thermalLabel(snapshot.thermalStatus), Icons.Outlined.Thermostat, if (snapshot.thermalStatus >= 3) StatusTone.WARNING else StatusTone.HEALTHY, "Android thermal status"),
         DashboardMetric("Workers", snapshot.workers.toString(), Icons.Outlined.Memory, StatusTone.PERFORMANCE, "Active threads"),
-        DashboardMetric("Donation", "%.2f%%".format(snapshot.donationPercent), Icons.Outlined.Bolt, StatusTone.NEUTRAL, "Cumulative active time"),
+        DashboardMetric("Rejected / stale", "${snapshot.rejected} / ${snapshot.stale}", Icons.Outlined.Bolt, StatusTone.NEUTRAL, "Pool share results"),
     )
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
         values.chunked(columns).forEach { rowItems ->

@@ -1,0 +1,13 @@
+* text=auto eol=lf
+*.sh text eol=lf
+gradlew text eol=lf
+*.py text eol=lf
+*.kt text eol=lf
+*.java text eol=lf
+*.c text eol=lf
+*.cpp text eol=lf
+*.hpp text eol=lf
+*.h text eol=lf
+*.S text eol=lf
+*.patch text eol=lf
+/third_party/src/** -text

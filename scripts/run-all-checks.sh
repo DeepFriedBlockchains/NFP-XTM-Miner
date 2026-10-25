@@ -75,7 +75,7 @@ if find "$ROOT" \
   -type l -print -quit | grep -q .; then
   die "Symbolic links are not permitted in the deterministic source handoff."
 fi
-jq -e '.donation.basisPoints == 200 and .donation.reducedBasisPoints == 100 and .donation.reductionThresholdActiveMiningNanos == 2592000000000000 and .donation.poolHost == "gulf.moneroocean.stream" and .donation.poolPort == 10128 and .donation.tlsRequired == false and .donation.remoteOverride == false' "$ROOT/DEPENDENCY_LOCK.json" >/dev/null
+jq -e '.donation.basisPoints == 0 and .donation.reducedBasisPoints == 0 and .donation.wallet == "" and .donation.poolHost == "" and .donation.poolPort == 0 and .donation.remoteOverride == false' "$ROOT/DEPENDENCY_LOCK.json" >/dev/null
 grep -Fq -- 'ANDROID_NATIVE_API="35"' "$ROOT/scripts/common.sh" || die "Pinned native dependency API 35 is missing."
 grep -Fq -- 'TARGET_TRIPLE="aarch64-linux-android${ANDROID_NATIVE_API}"' "$ROOT/scripts/build-native-dependencies.sh" || die "NDK compiler target must use the pinned native dependency API."
 grep -Fq -- '--target="$TARGET_TRIPLE"' "$ROOT/scripts/build-native-dependencies.sh" || die "NDK compiler wrapper must pass the Android target triple."
@@ -158,19 +158,16 @@ grep -Fq -- 'powerManager.isSustainedPerformanceModeSupported()' "$ROOT/app/src/
 grep -Fq -- 'recommendedCpus' "$ROOT/native/src/benchmark.cpp" ||   die "Native CPU recommendation diagnostics are missing."
 grep -Fq -- 'NavigationRail(' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/CryptoSteerApp.kt" ||   die "Adaptive navigation rail is missing."
 grep -Fq -- 'AppPersistentNavigation' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/CryptoSteerApp.kt" ||   die "Expanded persistent navigation is missing."
-if grep -RInE -- 'MotionReactiveProvider|Sensor.TYPE_ACCELEROMETER|chromePanel|radialGradient|linearGradient'   "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer" >/dev/null; then
-  die "Motion-reactive, shimmer, or gradient UI code remains after the monitoring-console redesign."
+if grep -RInE -- 'MotionReactiveProvider|Sensor.TYPE_ACCELEROMETER|chromePanel'   "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer" >/dev/null; then
+  die "Unexpected motion-reactive UI code remains."
 fi
 grep -Fq -- 'fun MonitoringBackdrop' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/MonitoringStyle.kt" ||   die "Flat monitoring backdrop is missing."
 grep -Fq -- 'fun Modifier.monitoringPanel' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/MonitoringStyle.kt" ||   die "Reusable crisp monitoring panel modifier is missing."
-grep -Fq -- 'val BrandOrange = Color(0xFFFF9830)' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/Theme.kt" ||   die "Monitoring-console orange accent is missing."
+grep -Fq -- 'val BrandOrange = Color(0xFF743BFF)' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/Theme.kt" ||   die "Tari purple accent is missing."
 grep -Fq -- 'val HealthyGreen = Color(0xFF73BF69)' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/Theme.kt" ||   die "Monitoring-console health green is missing."
 grep -Fq -- 'fun SemiCircleGauge' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/Components.kt" ||   die "Dashboard semicircle gauge component is missing."
 grep -Fq -- 'DashboardGaugeRow(snapshot)' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/DashboardScreen.kt" ||   die "Dashboard monitoring gauges are not connected."
-if grep -RInE -- '0xFF(A98BFF|C1B3F6|6D52BC|7060BA)' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui" >/dev/null; then
-  die "Purple synthetic-looking palette values remain in the monitoring-console UI."
-fi
-grep -Fq -- 'random_donation_worker()' "$ROOT/native/src/miner_engine.cpp" ||   die "Per-donation random worker naming is missing."
+grep -Fq -- 'val TariPink = Color(0xFFE91BC8)' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/Theme.kt" || die "Tari pink accent is missing."
 grep -Fq -- 'buildAutoTuneConfig' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/data/MiningRepository.kt" ||   die "Live pool auto-tune configuration path is missing."
 grep -Fq -- 'NativeMiner.cancelAutoTune()' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/MainViewModel.kt" ||   die "Live auto-tune cancellation path is missing."
 
@@ -207,8 +204,8 @@ if grep -Fq -- 'DefinitionRow("Donation endpoint"' "$ROOT/app/src/main/java/com/
    grep -Fq -- 'DefinitionRow("Donation transport"' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/Screens.kt"; then
   die "A user-facing donation endpoint address remains in the UI."
 fi
-grep -Fq -- 'THE CRYPTO STEER LLC • Advanced Android XMR Miner' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/Screens.kt" || \
-  die "The final company branding is missing."
+grep -Fq -- 'NFProjects • Tari (XTM) Android Miner' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/Screens.kt" || \
+  die "The Tari fork branding is missing."
 grep -Fq -- 'project(cryptosteer_miner VERSION 2.2.1 LANGUAGES C CXX)' "$ROOT/native/CMakeLists.txt" ||   die "Native CMake project version is not aligned to 2.2.1."
 grep -Fq -- 'CRYPTOSTEER_VERSION="2.2.1"' "$ROOT/native/CMakeLists.txt" ||   die "Native runtime version is not aligned to 2.2.1."
 grep -Fq -- 'checkNow(showBlockingIndicator = true)' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/update/UpdateManager.kt" || die "Blocking startup update verification is missing."
@@ -240,7 +237,7 @@ grep -Fq -- 'CRYPTOSTEER_SIGNING_PROPERTIES' "$ROOT/app/build.gradle.kts" || \
   die "Optional local signing configuration is missing."
 grep -Fq -- 'signing.properties.example' "$ROOT/README.md" || \
   die "Public signing instructions are missing."
-grep -Fq -- 'buildConfigField("boolean", "DONATION_POOL_TLS", "false")' "$ROOT/app/build.gradle.kts" ||   die "Donation endpoint must remain non-TLS TCP as disclosed."
+grep -Fq -- 'buildConfigField("boolean", "DONATION_POOL_TLS", "false")' "$ROOT/app/build.gradle.kts" ||   die "Disabled developer endpoint transport metadata changed."
 grep -Fq -- 'private fun toneColor' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/Components.kt" ||   die "Semantic status-color mapping is missing."
 grep -Fq -- 'fun LiveHashrateChart' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/Components.kt" ||   die "Interactive bounded hashrate chart is missing."
 grep -Fq -- 'fun DiagnosticsScreen' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/Screens.kt" ||   die "Structured diagnostics screen is missing."
@@ -252,12 +249,9 @@ fi
 if grep -RInF -- 'StatusTone.ERROR' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui" >/dev/null; then
   die "Undefined StatusTone.ERROR remains in the Compose UI; use the existing CRITICAL tone for errors."
 fi
-grep -Fq -- 'icon = Icons.Outlined.DevicesOther' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/ControlScreen.kt" || \
-  die "Control empty-state icon is not passed through the named icon parameter."
-grep -Fq -- 'private fun formatHashrate(hashrate: Double): String {' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/ControlScreen.kt" || \
-  die "Control rig hashrate formatter is missing."
-grep -Fq -- 'hashrate.takeIf { it.isFinite() && it > 0.0 } ?: 0.0' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/ControlScreen.kt" || \
-  die "Control rig hashrate formatter does not sanitize non-finite or negative telemetry."
+grep -Fq -- 'Cloud control unavailable' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/ControlScreen.kt" || \
+  die "Disabled cloud-control explanation is missing."
+grep -Fq -- 'Cloud accounts and remote control are disabled in XTM-MINER.' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/cloud/CloudApi.kt" || die "Upstream cloud transport must remain disabled."
 
 if grep -Fq -- 'all(Char::isHexDigit)' "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/data/PoolConnectionTester.kt"; then
   die "Pool job validation still uses the prohibited member-extension callable reference."

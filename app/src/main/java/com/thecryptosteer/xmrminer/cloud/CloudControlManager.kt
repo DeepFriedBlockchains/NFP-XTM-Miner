@@ -327,7 +327,7 @@ class CloudControlManager(
         )
         manager.notify(deviceId.hashCode(), NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle("Approve new CryptoSteer device")
+            .setContentTitle("Approve new XTM-MINER device")
             .setContentText("${data.optString("displayName", "A device")} requested access to this wallet account.")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .addAction(0, "Reject", actionIntent(DeviceApprovalReceiver.ACTION_REJECT, deviceId.hashCode() xor 0x522))

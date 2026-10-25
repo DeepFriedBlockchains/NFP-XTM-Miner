@@ -1,86 +1,37 @@
-# NFP XTM-MINER
+# NFP-XTM-Miner
 
-**Experimental Android Tari (XTM) miner · Development preview**
+**XTM-MINER** is the NFProjects Android ARM64 Tari miner, developed by Kasual Labz from the existing CryptoSteer Android application. This recovery preserves the Compose UI, C++ RandomX/JNI engine, worker controls, Android foreground service, encrypted settings, and battery/thermal protections.
 
-**Maintained by Night Fantom Projects (NFProjects)** · Based on [CryptoSteer XMR Miner](https://github.com/Crypto-Steer-LLC/CryptoSteer-XMR-Miner) by The Crypto Steer LLC.
+**Recovery build under validation.** The historical tested APK is preserved separately. Its device results do not validate this reconstructed source or a new APK. See [test report](docs/TEST-REPORT.md) and [release checklist](docs/RELEASE-CHECKLIST.md).
 
-NFP XTM-MINER is an independent fork adapting the CryptoSteer Android mining application toward Tari (XTM) support. The application is in **pre-release testing**, not a verified public release.
+- Tari `rx/0` pool configuration and mainnet Base58 envelope/checksum validation.
+- Reference Tari launcher/header artwork and purple-to-pink dashboard.
+- **0% application developer mining fee**; developer-wallet connection rotation is removed. Provider pool fees are separate.
+- Settings → **Mining Terminal / Live Logs** reuses the native/service event stream, with timestamps, severity colors, auto-scroll, filtering, bounded retention, copy, and sanitized diagnostic export.
+- Voluntary XTM/XMR donation information is confined to About; it is never used as the mining payout configuration.
+- Upstream accounts, remote control, installation telemetry and private updater are disabled.
 
-> **Independent project:** NFProjects is not affiliated with, endorsed by, or officially associated with CryptoSteer LLC, the Tari Project, Monero, or XMRig. We thank the original CryptoSteer developers and the wider open-source mining community for their work.
+Primary source: [GitHub](https://github.com/DeepFriedBlockchains/NFP-XTM-Miner). Secondary backup: [GitLab](https://gitlab.com/DeepFriedBlockchains/NFP-XTM-Miner). Recovery branch: `recovery/xtm-android-source`. Main branches and upstream history are preserved.
 
-## Development preview
+## Build and test
 
-<table>
-  <tr>
-    <th align="center">Mining Dashboard</th>
-    <th align="center">More / Tools</th>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/screenshots/xtm-dashboard.png" alt="XTM-MINER mining dashboard preview" width="370"></td>
-    <td align="center"><img src="docs/screenshots/xtm-more-menu.png" alt="XTM-MINER More and Tools screen preview" width="370"></td>
-  </tr>
-</table>
+Use the pinned Linux build environment in [build instructions](docs/BUILD-INSTRUCTIONS.md). Installation requires Android API 36 or newer and ARM64. The application ID remains `com.nfprojects.xtmminer` (`com.nfprojects.xtmminer.debug` for debug), matching the reference APK's identity.
 
-The interface is a development preview; appearance and functionality may change.
-
-## Project goals and features under evaluation
-
-- Native C/C++ mining components with an Android Kotlin/Java application layer
-- ARM64 Android support
-- User-managed mining pools and connection settings
-- Live hashrate, share counts, uptime and session information
-- Adjustable performance modes and device diagnostics
-- Tari-specific mining, wallet and pool compatibility (**verification in progress**)
-- Removal of the upstream developer-fee mechanism (**source and runtime audit pending**)
-
-Some features originate in the upstream application and may require further adaptation or testing. Listing a feature here does not mean it has passed release verification.
-
-## Preliminary testing — October 22, 2026
-
-Initial Android testing compared this development build with the original CryptoSteer XMR APK using similar configurations. The applications exhibited broadly comparable reported hashrates and operating behavior. This is an encouraging **preliminary observation**, not proof of successful Tari mining.
-
-The following remain unverified: Tari pool accepted shares, complete source and build integrity, developer-fee removal, security, long-running stability and release readiness.
-
-## Release verification checklist
-
-- [x] Initial Android application testing
-- [x] Preliminary comparison with upstream XMR miner
-- [ ] Review the complete source and build configuration
-- [ ] Confirm Tari algorithm, wallet handling and pool protocol
-- [ ] Confirm accepted Tari shares on a pool
-- [ ] Audit developer-fee logic and any alternate pool routing
-- [ ] Inspect network communications, permissions and dependencies
-- [ ] Perform extended stability, battery and thermal testing
-- [ ] Verify release signing, APK integrity and checksums
-- [ ] Publish a tested release with reproducible instructions
-
-## Downloads
-
-**No public APK release is available yet.** Development APKs are for controlled testing. A verified release and checksum will be published through official NFProjects channels after testing and review.
-
-## Source and building
-
-Repository: [DeepFriedBlockchains/NFP-XTM-Miner](https://github.com/DeepFriedBlockchains/NFP-XTM-Miner)
-
-```bash
-git clone https://github.com/DeepFriedBlockchains/NFP-XTM-Miner.git
+```sh
+git clone --branch recovery/xtm-android-source https://github.com/DeepFriedBlockchains/NFP-XTM-Miner.git
 cd NFP-XTM-Miner
+export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
+bash scripts/setup-linux-builder.sh
+bash scripts/build-native-dependencies.sh
+bash gradlew --no-daemon --no-configuration-cache :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleDebugAndroidTest
 ```
 
-The upstream project uses a Linux/Android toolchain. Fork-specific dependencies, build scripts, signing and build variants must be checked before publishing authoritative build instructions. Do not assume the original project's release steps produce a verified Tari APK.
+No wallet private key, mnemonic, or recovery phrase is needed. Configure your own public Tari payout address and a currently documented compatible pool endpoint. See [mining compatibility](docs/MINING-COMPATIBILITY.md) and [physical-device test instructions](docs/PHONE-TESTING.md).
 
-## Responsible mining
+## Recovery evidence
 
-Mining can cause sustained CPU load, heat, higher power consumption and battery or hardware wear. Mine only on devices you own or are authorized to operate. Do not bypass thermal safeguards. Users should explicitly control when mining starts and stops.
+[Source map](docs/SOURCE-RECOVERY-MAP.md), [file provenance](docs/FILE-PROVENANCE-AUDIT.md), [evidence](docs/RECOVERY-EVIDENCE.md), [APK comparison](docs/APK-COMPARISON.md), and [developer-fee audit](docs/DEVELOPER-FEE-AUDIT.md) distinguish recovered artifacts, reconstructed code, fresh checks and outstanding device validation.
 
-## Credits and licensing
+The independent Termux/XMRig project is not part of this Android source tree. Original inputs and APKs remain outside the clean project and are not modified.
 
-- **Fork maintainer:** Night Fantom Projects (NFProjects)
-- **Original application:** [CryptoSteer XMR Miner](https://github.com/Crypto-Steer-LLC/CryptoSteer-XMR-Miner), The Crypto Steer LLC
-- **Acknowledgments:** XMRig, Monero and Tari open-source contributors
-
-The upstream repository identifies Apache License 2.0 for application source and CC BY-SA 4.0 for certain artwork; third-party components retain their respective licenses. Refer to the repository's `LICENSE`, `NOTICE`, `ARTWORK_LICENSE.md` and third-party notices for the actual applicable terms. Original copyright and license notices remain in force.
-
----
-
-*Built on open-source foundations. Developed independently. Testing and transparency first.*
+Original application code is Apache-2.0, copyright 2026 THE CRYPTO STEER LLC. Upstream artwork and third-party dependencies retain their own licenses. Tari checksum attribution is in `LICENSES/Tari-BSD-3-Clause.txt`. See `LICENSE`, `NOTICE`, `LICENSES/` and `ARTWORK_LICENSE.md`. NFProjects is not affiliated with Tari or the upstream developer.
