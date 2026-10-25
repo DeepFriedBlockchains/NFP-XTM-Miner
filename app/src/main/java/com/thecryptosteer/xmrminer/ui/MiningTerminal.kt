@@ -64,7 +64,7 @@ fun LogsScreen(logs: List<LogEntry>, clear: () -> Unit) {
     val exporter = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) { uri ->
         val snapshot = exportSnapshot
         exportSnapshot = ""
-        if (uri != null) scope.launch {
+        if (uri != null && snapshot.isNotEmpty()) scope.launch {
             val result = withContext(Dispatchers.IO) {
                 runCatching {
                     requireNotNull(context.contentResolver.openOutputStream(uri)).bufferedWriter().use { it.write(snapshot) }

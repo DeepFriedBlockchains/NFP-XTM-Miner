@@ -70,6 +70,7 @@ android {
 
     buildTypes {
         debug {
+            buildConfigField("String", "DISTRIBUTION_LABEL", "\"Debug testing build\"")
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
             isJniDebuggable = true
