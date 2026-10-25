@@ -17,7 +17,7 @@ class RigSyncForegroundService : Service() {
         getSystemService(NotificationManager::class.java).createNotificationChannel(NotificationChannel(channelId, "Remote rig control", NotificationManager.IMPORTANCE_LOW))
         val notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle("CryptoSteer remote control active")
+            .setContentTitle("XTM-MINER remote control active")
             .setContentText("Live telemetry, device approvals, and account-owned rig commands are connected.")
             .setOngoing(true).setOnlyAlertOnce(true).build()
         startForeground(REMOTE_CONTROL_NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)

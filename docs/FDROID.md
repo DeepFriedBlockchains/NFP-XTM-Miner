@@ -1,3 +1,5 @@
+> XTM-MINER fork: see README.md and docs/TARI-COMPATIBILITY.md for current identity, zero-fee policy and disabled upstream services. Historical upstream release/distribution details below are retained for reference.
+
 
 # F-Droid build
 

@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.outlined.Dashboard
+import androidx.compose.material.icons.outlined.Subject
 import androidx.compose.material.icons.outlined.DeveloperBoard
 import androidx.compose.material.icons.outlined.DevicesOther
 import androidx.compose.material.icons.outlined.Memory
@@ -40,6 +41,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.layout.size
+import com.thecryptosteer.xmrminer.R
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -54,7 +59,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 
 private enum class AppRoute(val route: String, val title: String) {
-    DASHBOARD("dashboard", "CryptoSteer Miner"),
+    DASHBOARD("dashboard", "XTM-MINER"),
     MINING("mining", "Mining"),
     POOLS("pools", "Pool profiles"),
     TUNING("tuning", "Tuning"),
@@ -81,11 +86,10 @@ private data class RootNavigationItem(
 
 private val rootNavigationItems = listOf(
     RootNavigationItem(AppRoute.DASHBOARD, "Dashboard", Icons.Outlined.Dashboard),
-    RootNavigationItem(AppRoute.MINING, "Mining", Icons.Outlined.Memory),
-    RootNavigationItem(AppRoute.POOLS, "Pools", Icons.Outlined.Public),
-    RootNavigationItem(AppRoute.TUNING, "Tune", Icons.Outlined.Tune),
-    RootNavigationItem(AppRoute.DEVICE, "Device", Icons.Outlined.DeveloperBoard),
-    RootNavigationItem(AppRoute.CONTROL, "Control", Icons.Outlined.DevicesOther),
+    RootNavigationItem(AppRoute.SETTINGS, "Settings", Icons.Outlined.Memory),
+    RootNavigationItem(AppRoute.POOLS, "Pool", Icons.Outlined.Public),
+    RootNavigationItem(AppRoute.TUNING, "Tuning", Icons.Outlined.Tune),
+    RootNavigationItem(AppRoute.LOGS, "Logs", Icons.Outlined.Subject),
     RootNavigationItem(AppRoute.MORE, "More", Icons.Outlined.MoreHoriz),
 )
 
@@ -160,6 +164,7 @@ fun CryptoSteerApp(
                         title = {
                             Column {
                                 Text(currentAppRoute.title)
+                                if (currentAppRoute == AppRoute.DASHBOARD) Text("TARI NETWORK", style = MaterialTheme.typography.labelSmall, color = CryptoSteerColors.TariPink)
                                 val activeProfile = profiles.firstOrNull { it.defaultProfile && it.enabled } ?: profiles.firstOrNull { it.enabled }
                                 if (currentAppRoute == AppRoute.DASHBOARD && activeProfile != null) {
                                     Text(
@@ -171,7 +176,9 @@ fun CryptoSteerApp(
                             }
                         },
                         navigationIcon = {
-                            if (currentAppRoute !in rootNavigationItems.map { it.route }) {
+                            if (currentAppRoute == AppRoute.DASHBOARD) {
+                                Image(painterResource(R.drawable.tari_logo), "Tari logo", Modifier.padding(start = 10.dp, end = 8.dp).size(42.dp))
+                            } else if (currentAppRoute !in rootNavigationItems.map { it.route }) {
                                 IconButton(onClick = { navController.popBackStack() }) {
                                     Icon(Icons.AutoMirrored.Outlined.ArrowBack, "Back")
                                 }
@@ -286,6 +293,7 @@ fun CryptoSteerApp(
                     composable(AppRoute.MORE.route) {
                         MoreScreen(
                             onBenchmark = { navController.navigate(AppRoute.BENCHMARK.route) },
+                            onDevice = { navController.navigate(AppRoute.DEVICE.route) },
                             onStatistics = { navController.navigate(AppRoute.STATISTICS.route) },
                             onDiagnostics = { navController.navigate(AppRoute.DIAGNOSTICS.route) },
                             onLogs = { navController.navigate(AppRoute.LOGS.route) },
@@ -299,7 +307,7 @@ fun CryptoSteerApp(
                     composable(AppRoute.STATISTICS.route) { StatisticsScreen(history, snapshot) }
                     composable(AppRoute.DIAGNOSTICS.route) { DiagnosticsScreen(snapshot, diagnosticsState, viewModel) }
                     composable(AppRoute.LOGS.route) { LogsScreen(logs, viewModel::clearLogs) }
-                    composable(AppRoute.SETTINGS.route) { SettingsScreen(snapshot) }
+                    composable(AppRoute.SETTINGS.route) { SettingsScreen(snapshot) { navController.navigate(AppRoute.LOGS.route) } }
                     composable(AppRoute.ABOUT.route) { AboutScreen(snapshot, donationTier) }
                     composable(AppRoute.PRIVACY.route) { PrivacyScreen() }
                     composable(AppRoute.TROUBLESHOOTING.route) { TroubleshootingScreen() }
@@ -371,7 +379,7 @@ private fun AppPersistentNavigation(selected: AppRoute, navController: NavContro
         tonalElevation = 0.dp,
     ) {
         Column(Modifier.padding(horizontal = 12.dp, vertical = 22.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text("CryptoSteer", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+            Text("XTM-MINER", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
             Text("Performance console", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 12.dp))
             rootNavigationItems.forEach { item ->
                 NavigationDrawerItem(
@@ -404,10 +412,12 @@ private fun NavController.navigateRoot(route: AppRoute) {
 
 private fun rootForRoute(route: AppRoute): AppRoute = when (route) {
     AppRoute.DASHBOARD -> AppRoute.DASHBOARD
-    AppRoute.MINING -> AppRoute.MINING
+    AppRoute.MINING -> AppRoute.MORE
+    AppRoute.SETTINGS -> AppRoute.SETTINGS
     AppRoute.POOLS -> AppRoute.POOLS
     AppRoute.TUNING, AppRoute.POWER_PROFILES, AppRoute.CUSTOM_TUNING -> AppRoute.TUNING
-    AppRoute.DEVICE -> AppRoute.DEVICE
-    AppRoute.CONTROL -> AppRoute.CONTROL
+    AppRoute.DEVICE -> AppRoute.MORE
+    AppRoute.CONTROL -> AppRoute.MORE
+    AppRoute.LOGS -> AppRoute.LOGS
     else -> AppRoute.MORE
 }

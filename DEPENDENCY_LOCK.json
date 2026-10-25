@@ -2,7 +2,7 @@
   "schema": 1,
   "lockedAtUtc": "2026-08-05T05:30:00Z",
   "application": {
-    "applicationId": "com.thecryptosteer.xmrminer",
+    "applicationId": "com.nfprojects.xtmminer",
     "versionCode": 20201,
     "versionName": "2.2.1"
   },
@@ -63,15 +63,15 @@
     }
   ],
   "donation": {
-    "basisPoints": 200,
-    "wallet": "46QiekGmrwa3kEpDDXAVZkFNKzNKxyopSCLD8mgJLYeQ5mQJ3FJJ6dPT1B53h5rHMxTWN15Jf5aojXfGt36cpSgf3CjRKSz",
-    "poolHost": "gulf.moneroocean.stream",
-    "poolPort": 10128,
+    "basisPoints": 0,
+    "wallet": "",
+    "poolHost": "",
+    "poolPort": 0,
     "tlsRequired": false,
     "remoteOverride": false,
-    "workerPrefix": "NFPROJECTS",
-    "reducedBasisPoints": 100,
-    "reductionThresholdActiveMiningNanos": 2592000000000000,
-    "accountTierSource": "authenticated NFPROJECTS control service"
+    "workerPrefix": "",
+    "reducedBasisPoints": 0,
+    "reductionThresholdActiveMiningNanos": 0,
+    "accountTierSource": "disabled in XTM fork"
   }
 }

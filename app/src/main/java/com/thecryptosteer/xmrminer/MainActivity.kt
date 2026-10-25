@@ -66,7 +66,7 @@ class MainActivity : FragmentActivity() {
         runCatching { viewModel.biometricEnrollmentCipher() }
             .onSuccess { cipher ->
                 biometricPrompt(
-                    title = "Protect CryptoSteer Control",
+                    title = "Protect XTM-MINER Control",
                     subtitle = "Authenticate to store this wallet account session",
                     cipher = cipher,
                     onSuccess = viewModel::completeBiometricEnrollment,
@@ -79,7 +79,7 @@ class MainActivity : FragmentActivity() {
         runCatching { viewModel.biometricUnlockCipher() }
             .onSuccess { cipher ->
                 biometricPrompt(
-                    title = "Unlock CryptoSteer Control",
+                    title = "Unlock XTM-MINER Control",
                     subtitle = "Authenticate to restore your protected session",
                     cipher = cipher,
                     onSuccess = viewModel::completeBiometricUnlock,

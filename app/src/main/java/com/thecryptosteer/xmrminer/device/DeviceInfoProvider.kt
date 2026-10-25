@@ -302,7 +302,7 @@ internal fun formatFrequency(khz: Long?): String = when {
 }
 
 internal fun deviceInfoReport(info: DeviceInfoSnapshot): String = buildString {
-    appendLine("CryptoSteer device report")
+    appendLine("XTM-MINER device report")
     appendLine("Collected: ${info.collectedAtMillis}")
     appendLine("Device: ${info.manufacturer} ${info.model}")
     appendLine("SoC: ${info.socManufacturer} ${info.socModel}")

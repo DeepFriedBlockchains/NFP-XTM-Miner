@@ -26,16 +26,18 @@ import androidx.core.view.WindowCompat
  * Color is reserved for state and data, while surfaces remain neutral and high contrast.
  */
 object CryptoSteerColors {
-    val AppBackgroundDark = Color(0xFF0B0C0E)
-    val NavigationDark = Color(0xFF111217)
-    val SurfaceDark = Color(0xFF181B1F)
-    val SurfaceElevatedDark = Color(0xFF1F2329)
-    val SurfaceSelectedDark = Color(0xFF272B32)
-    val OutlineDark = Color(0xFF2D323A)
-    val OutlineStrongDark = Color(0xFF3C434D)
+    val AppBackgroundDark = Color(0xFF100C1C)
+    val NavigationDark = Color(0xFF100C1C)
+    val SurfaceDark = Color(0xFF171622)
+    val SurfaceElevatedDark = Color(0xFF201A30)
+    val SurfaceSelectedDark = Color(0xFF302048)
+    val OutlineDark = Color(0xFF342747)
+    val OutlineStrongDark = Color(0xFF554269)
 
-    val BrandOrange = Color(0xFFFF9830)
-    val BrandOrangePressed = Color(0xFFE57C17)
+    val BrandOrange = Color(0xFF743BFF)
+    val TariPink = Color(0xFFE91BC8)
+    val TariViolet = Color(0xFFA52CFF)
+    val BrandOrangePressed = Color(0xFFA52CFF)
     val SignalBlue = Color(0xFF5794F2)
     val SignalCyan = Color(0xFF6ED0E0)
     val HealthyGreen = Color(0xFF73BF69)
@@ -43,8 +45,8 @@ object CryptoSteerColors {
     val CriticalRed = Color(0xFFF2495C)
     val AlertYellow = Color(0xFFFADE2A)
 
-    val TextPrimaryDark = Color(0xFFD8D9DA)
-    val TextSecondaryDark = Color(0xFFA7B0BE)
+    val TextPrimaryDark = Color(0xFFF5F3FF)
+    val TextSecondaryDark = Color(0xFFA9A6BE)
     val TextMutedDark = Color(0xFF6E7681)
     val DisabledDark = Color(0xFF4D545D)
 
@@ -62,9 +64,9 @@ object CryptoSteerColors {
 
 private val DarkColors = darkColorScheme(
     primary = CryptoSteerColors.BrandOrange,
-    onPrimary = Color(0xFF241204),
-    primaryContainer = Color(0xFF4A2B12),
-    onPrimaryContainer = Color(0xFFFFD9B5),
+    onPrimary = Color(0xFFF5F3FF),
+    primaryContainer = Color(0xFF302048),
+    onPrimaryContainer = Color(0xFFEACBFF),
     secondary = CryptoSteerColors.SignalBlue,
     onSecondary = Color(0xFF07192F),
     secondaryContainer = Color(0xFF17365D),
@@ -92,7 +94,7 @@ private val DarkColors = darkColorScheme(
 )
 
 private val LightColors = lightColorScheme(
-    primary = Color(0xFFB75200),
+    primary = Color(0xFF743BFF),
     onPrimary = Color.White,
     primaryContainer = Color(0xFFFFDCC2),
     onPrimaryContainer = Color(0xFF3A1800),
@@ -164,10 +166,10 @@ data class CryptoSteerSemanticColors(
 val LocalCryptoSteerSemanticColors = staticCompositionLocalOf {
     CryptoSteerSemanticColors(
         live = CryptoSteerColors.SignalBlue,
-        healthy = CryptoSteerColors.HealthyGreen,
+        healthy = CryptoSteerColors.TariPink,
         warning = CryptoSteerColors.WarningAmber,
         critical = CryptoSteerColors.CriticalRed,
-        performance = CryptoSteerColors.SignalCyan,
+        performance = CryptoSteerColors.TariViolet,
         muted = CryptoSteerColors.TextMutedDark,
         navigation = CryptoSteerColors.NavigationDark,
         elevated = CryptoSteerColors.SurfaceElevatedDark,
@@ -183,16 +185,16 @@ object CryptoSteerThemeTokens {
 
 @Composable
 fun CryptoSteerTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     val semantic = if (darkTheme) {
         CryptoSteerSemanticColors(
             live = CryptoSteerColors.SignalBlue,
-            healthy = CryptoSteerColors.HealthyGreen,
+            healthy = CryptoSteerColors.TariPink,
             warning = CryptoSteerColors.WarningAmber,
             critical = CryptoSteerColors.CriticalRed,
-            performance = CryptoSteerColors.SignalCyan,
+            performance = CryptoSteerColors.TariViolet,
             muted = CryptoSteerColors.TextMutedDark,
             navigation = CryptoSteerColors.NavigationDark,
             elevated = CryptoSteerColors.SurfaceElevatedDark,

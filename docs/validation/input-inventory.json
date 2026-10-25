@@ -1,0 +1,110 @@
+[
+  {
+    "path": "Apk NFP Footer.png",
+    "bytes": 3204,
+    "sha256": "94588e8d70787083ed8a6f2eafd1a9c91b80e8ec05f933c6d4f9ab656a610ca1",
+    "classification": "Android UI/branding reference"
+  },
+  {
+    "path": "Apk NFP Footer01.png",
+    "bytes": 3204,
+    "sha256": "94588e8d70787083ed8a6f2eafd1a9c91b80e8ec05f933c6d4f9ab656a610ca1",
+    "classification": "Android UI/branding reference"
+  },
+  {
+    "path": "CONVERT XMR MINER TO TARI.txt",
+    "bytes": 7436,
+    "sha256": "2dac1bd866201a3d78ba19f92e95c5383ca8237a71a2a96e00dc1b5b2a1bba8a",
+    "classification": "Historical prompt or conversation; guidance, not executable source"
+  },
+  {
+    "path": "Neon Purple Project Credit Watermark.png",
+    "bytes": 889477,
+    "sha256": "b069bf2d7aba61a058a14e442c85009db60e13220307c6571b76edbc28ccb6c1",
+    "classification": "Android UI/branding reference"
+  },
+  {
+    "path": "NFProjects-donation-only.patch",
+    "bytes": 4495,
+    "sha256": "572b9502f6764ce4f398c1f0515b3a2e3020b611fee6bbd5b9db1b6e6aac8afa",
+    "classification": "Historical UI draft; donation-only draft supersedes footer patch"
+  },
+  {
+    "path": "NFProjects-footer.patch",
+    "bytes": 57417,
+    "sha256": "1a785b480db46a4127ec1ad1abebb43477953e0851d85a1517ccd2b25b5e1139",
+    "classification": "Historical UI draft; donation-only draft supersedes footer patch"
+  },
+  {
+    "path": "recorded-source-edits.json",
+    "bytes": 98135,
+    "sha256": "3cf1053316eb1b27be2eea20e27eab840054131f051adbaa37bb251430e71626",
+    "classification": "Historical edit evidence; reviewed source operations reconstructed"
+  },
+  {
+    "path": "Settings in apk update author.png",
+    "bytes": 150381,
+    "sha256": "cad5249495923d0b90f0c0d1665f7cf6cfb176832248bc3a8aa19385678198b3",
+    "classification": "Android UI/branding reference"
+  },
+  {
+    "path": "Transparent footer.png",
+    "bytes": 889477,
+    "sha256": "b069bf2d7aba61a058a14e442c85009db60e13220307c6571b76edbc28ccb6c1",
+    "classification": "Android UI/branding reference"
+  },
+  {
+    "path": "XMR to XTM Miner Prompt.txt",
+    "bytes": 10547,
+    "sha256": "d883d2c23575655aa5b656060bca6ee5d1ba48bee645a9b29dfac67daff9ee45",
+    "classification": "Historical prompt or conversation; guidance, not executable source"
+  },
+  {
+    "path": "xtm-dashboard.png",
+    "bytes": 247239,
+    "sha256": "ae77e51b92a124ebbc9f8ce6d80a4444a58744687d35cb9efa3b1e6cb2cf4658",
+    "classification": "Android UI/branding reference"
+  },
+  {
+    "path": "XTM-MINER-arm64-debug (1).apk",
+    "bytes": 76429347,
+    "sha256": "ded5a9e67f0203ead217fd7cd94a39c95719b2a5d97f7284fa7648f45f0f003b",
+    "classification": "Reference APK duplicate; preserved unchanged"
+  },
+  {
+    "path": "XTM-MINER-arm64-debug (2).apk",
+    "bytes": 76429347,
+    "sha256": "ded5a9e67f0203ead217fd7cd94a39c95719b2a5d97f7284fa7648f45f0f003b",
+    "classification": "Reference APK duplicate; preserved unchanged"
+  },
+  {
+    "path": "XTM-MINER-arm64-debug (3).apk",
+    "bytes": 76429347,
+    "sha256": "ded5a9e67f0203ead217fd7cd94a39c95719b2a5d97f7284fa7648f45f0f003b",
+    "classification": "Reference APK duplicate; preserved unchanged"
+  },
+  {
+    "path": "XTM-MINER-arm64-debug.apk",
+    "bytes": 76429347,
+    "sha256": "ded5a9e67f0203ead217fd7cd94a39c95719b2a5d97f7284fa7648f45f0f003b",
+    "classification": "Reference APK duplicate; preserved unchanged"
+  },
+  {
+    "path": "XTM-MINER-original-recovery-evidence (1).zip",
+    "bytes": 50464,
+    "sha256": "6a5453ad2214ae48fe4553bb134e25d46a142ce8dede50e8fa7097c7f788431f",
+    "classification": "Recovery evidence archive; not buildable source"
+  },
+  {
+    "path": "XTM-MINER-original-recovery-evidence.zip",
+    "bytes": 31769,
+    "sha256": "a823ba554c26652622a6e3617d01227067e2ecf5a2383c5a2708b8a6081c8918",
+    "classification": "Recovery evidence archive; not buildable source"
+  },
+  {
+    "path": "xtm-more-menu.png",
+    "bytes": 175458,
+    "sha256": "190625df2bbcbfc65d38fe1c2102fd355128b4203dd6b5a5f19c20a7f62946d8",
+    "classification": "Android UI/branding reference"
+  }
+]

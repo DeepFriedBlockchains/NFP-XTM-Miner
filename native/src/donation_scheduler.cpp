@@ -24,7 +24,7 @@ std::uint64_t maximum_donation_for(std::uint64_t user_nanos, std::uint32_t basis
 } // namespace
 
 DonationScheduler::DonationScheduler(std::uint64_t user_nanos, std::uint64_t donation_nanos, std::uint32_t basis_points)
-    : user_(user_nanos), donation_(0), basis_points_(basis_points == 100U ? 100U : 200U) {
+    : user_(user_nanos), donation_(0), basis_points_(basis_points == 0U ? 0U : (basis_points == 100U ? 100U : 200U)) {
     // Persisted counters are untrusted. The historical counter may legitimately
     // be above the earned 1% tier because the account began at 2%. Preserve that
     // real history while clamping corruption to the highest compiled lifetime cap.
@@ -38,7 +38,7 @@ std::uint64_t DonationScheduler::donation_allowance() const noexcept {
 bool DonationScheduler::donation_due(std::uint64_t minimum_slice_nanos) const noexcept { return donation_allowance() >= minimum_slice_nanos; }
 void DonationScheduler::add_user(std::uint64_t nanos) noexcept { user_ = std::numeric_limits<std::uint64_t>::max() - user_ < nanos ? std::numeric_limits<std::uint64_t>::max() : user_ + nanos; }
 bool DonationScheduler::set_basis_points(std::uint32_t basis_points) noexcept {
-    if (basis_points != 100U && basis_points != 200U) return false;
+    if (basis_points != 0U && basis_points != 100U && basis_points != 200U) return false;
     basis_points_.store(basis_points, std::memory_order_release);
     return true;
 }

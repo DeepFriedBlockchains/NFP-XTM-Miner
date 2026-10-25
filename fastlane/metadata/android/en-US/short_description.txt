@@ -1,1 +1,1 @@
-Mine Monero with a native, user-controlled RandomX engine
+Experimental Tari RandomX miner for ARM64 Android

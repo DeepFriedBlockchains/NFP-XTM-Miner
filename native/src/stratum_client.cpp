@@ -24,7 +24,7 @@ std::string rpc_request(std::uint64_t id, std::string_view method, std::string_v
 std::optional<Job> StratumClient::connect_and_login(Config const& config, Endpoint const& endpoint, std::string const& login, std::string const& rig_id) {
     transport_.connect(endpoint, config.connect_timeout_seconds, config.allow_insecure_tls);
     std::string params = "{\"login\":\"" + json::escape(login) + "\",\"pass\":\"" + json::escape(config.password) +
-        "\",\"agent\":\"CryptoSteer/" CRYPTOSTEER_VERSION "\",\"rigid\":\"" + json::escape(rig_id) +
+        "\",\"agent\":\"XTM-MINER/" CRYPTOSTEER_VERSION "\",\"rigid\":\"" + json::escape(rig_id) +
         "\",\"algo\":[\"rx/0\"]}";
     transport_.write_line(rpc_request(1, "login", params));
     auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(std::max(5, config.connect_timeout_seconds));
@@ -41,19 +41,23 @@ std::optional<Job> StratumClient::connect_and_login(Config const& config, Endpoi
 
 Job StratumClient::parse_job_value(json::Value const& value) {
     if (!value.is_object()) throw std::runtime_error("pool job is not an object");
+    const auto algorithm = value.string_or("algo", "rx/0");
+    if (algorithm != "rx/0") throw std::runtime_error("unsupported pool algorithm: " + algorithm);
     Job job;
     job.job_id = value.string_or("job_id", value.string_or("jobId"));
     std::string blob = value.string_or("blob");
     job.target_hex = value.string_or("target");
     std::string seed = value.string_or("seed_hash", value.string_or("seedHash"));
     job.height = static_cast<std::uint64_t>(std::max<std::int64_t>(0, value.i64_or("height", 0)));
-    job.nonce_offset = static_cast<std::uint32_t>(std::max<std::int64_t>(0, value.i64_or("nonce_offset", 39)));
+    const auto nonce_offset = value.i64_or("nonce_offset", 39);
+    if (nonce_offset < 0 || nonce_offset > 508) throw std::runtime_error("pool nonce offset is outside the supported blob");
+    job.nonce_offset = static_cast<std::uint32_t>(nonce_offset);
     if (job.job_id.empty() || blob.empty() || job.target_hex.empty() || seed.empty()) throw std::runtime_error("pool job is missing job_id, blob, target, or seed_hash");
     job.blob = hex_decode(blob); job.seed_hash = hex_decode(seed);
     if (job.blob.size() < static_cast<std::size_t>(job.nonce_offset) + 4U) throw std::runtime_error("pool job blob is too short for its nonce offset");
     if (job.blob.size() > 512U) throw std::runtime_error("pool job blob is unexpectedly large");
     if (job.seed_hash.size() != 32U) throw std::runtime_error("pool seed hash must be 32 bytes");
-    (void)hex_decode(job.target_hex); // validates format; target width is checked by hash_meets_target
+    (void)compile_hash_target(job.target_hex); // Reject unsupported target width before starting workers.
     return job;
 }
 
@@ -96,9 +100,9 @@ PoolEvent StratumClient::parse_message(std::string const& line, bool during_logi
     auto pending = pending_submissions_.find(id);
     if (pending != pending_submissions_.end()) {
         pending_submissions_.erase(pending);
-        bool accepted = true; std::string message = "OK";
+        bool accepted = false; std::string message = "Unrecognized share response";
         if (result && result->is_object()) {
-            message = result->string_or("status", "OK");
+            message = result->string_or("status", "");
             accepted = message == "OK" || message == "ok" || result->bool_or("accepted", false);
         } else if (result && result->is_bool()) accepted = result->as_bool();
         return {accepted ? PoolEventKind::Accepted : PoolEventKind::Rejected, std::nullopt, message, id};

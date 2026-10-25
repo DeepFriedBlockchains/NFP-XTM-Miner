@@ -12,3 +12,7 @@ branding/source/cryptosteer-xmr-miner-logo-original.png
 Its recorded SHA-256 is stored in `branding/ORIGINAL_LOGO_SHA256.txt`.
 
 This artwork license does not change the licenses of the application source or third-party components.
+
+## XTM-MINER fork additions
+
+The supplied Tari logo in `branding/tari/tari-logo.png` is reused in the header and launcher. Tari trademarks belong to their owners; the upstream artwork license does not grant rights to Tari branding. The user-supplied dashboard reference is design guidance, not a screenshot of a running APK. Confirm trademark and asset redistribution terms before public store distribution.

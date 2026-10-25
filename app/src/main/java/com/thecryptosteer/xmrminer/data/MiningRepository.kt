@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import com.thecryptosteer.xmrminer.domain.AppSettings
 import com.thecryptosteer.xmrminer.domain.MinerConfig
 import com.thecryptosteer.xmrminer.domain.PoolProfile
+import com.thecryptosteer.xmrminer.domain.poolLogin
 import com.thecryptosteer.xmrminer.domain.PoolValidator
 import com.thecryptosteer.xmrminer.security.SecretStore
 import com.thecryptosteer.xmrminer.service.MiningForegroundService
@@ -68,7 +69,7 @@ class MiningRepository(
         val profile = profiles.first().first { it.id == id }
         PoolConnectionTester.test(
             profile.primary,
-            profile.username,
+            poolLogin(profile),
             effectivePassword(profile),
             profile.worker,
             profile.connectTimeoutSeconds,
@@ -80,7 +81,7 @@ class MiningRepository(
         val profile = profiles.first().first { it.id == id && it.enabled }
         PoolConnectionTester.fetchLiveJob(
             profile.primary,
-            profile.username,
+            poolLogin(profile),
             effectivePassword(profile),
             profile.worker,
             profile.connectTimeoutSeconds,
@@ -94,7 +95,7 @@ class MiningRepository(
             ?: error("The selected pool profile is unavailable.")
         JSONObject().apply {
             put("durationSeconds", durationSeconds.coerceIn(60, 600))
-            put("username", profile.username)
+            put("username", poolLogin(profile))
             put("password", effectivePassword(profile))
             put("worker", profile.worker)
             put("rigId", profile.rigId.ifBlank { profile.worker })
@@ -122,12 +123,13 @@ class MiningRepository(
         val settings = settingsOverride ?: settings.first()
         require(settings.disclosureAccepted) { "The first-launch disclosure must be accepted before mining." }
         val profile = profiles.first().firstOrNull { it.id == profileId && it.enabled } ?: error("The selected pool profile is unavailable.")
+        require(PoolValidator.validate(profile).valid) { "Configure a valid Tari mainnet pool profile before mining." }
         val account = accounting.first()
         val config = MinerConfig(
             profileId = profile.id,
             profileName = profile.name,
             endpoints = listOf(profile.primary) + profile.failovers,
-            username = profile.username,
+            username = poolLogin(profile),
             password = effectivePassword(profile),
             worker = profile.worker,
             rigId = profile.rigId.ifBlank { profile.worker },

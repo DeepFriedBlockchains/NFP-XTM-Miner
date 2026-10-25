@@ -86,9 +86,9 @@ class UpdateManager(private val context: Context) {
                     enforcementEnabled = enforcement,
                     manifest = manifest,
                     message = when {
-                        blocked -> "CryptoSteer ${manifest.versionName} is required before mining can continue."
-                        newer -> "CryptoSteer ${manifest.versionName} is available."
-                        else -> "CryptoSteer is current."
+                        blocked -> "XTM-MINER ${manifest.versionName} is required before mining can continue."
+                        newer -> "XTM-MINER ${manifest.versionName} is available."
+                        else -> "XTM-MINER is current."
                     },
                 )
             }.onSuccess { mutableState.value = it }
@@ -129,11 +129,11 @@ class UpdateManager(private val context: Context) {
                 enforcementEnabled = enforcement,
                 manifest = manifest,
                 message = if (blocked) {
-                    "CryptoSteer ${manifest.versionName} is required before mining can continue."
+                    "XTM-MINER ${manifest.versionName} is required before mining can continue."
                 } else if (newer) {
-                    "CryptoSteer ${manifest.versionName} is available."
+                    "XTM-MINER ${manifest.versionName} is available."
                 } else {
-                    "CryptoSteer is current."
+                    "XTM-MINER is current."
                 },
             )
         }.getOrNull()
@@ -152,9 +152,9 @@ class UpdateManager(private val context: Context) {
         if (!mutableState.value.available) return
         scope.launch {
             runCatching {
-                if (!canInstallPackages()) error("Allow CryptoSteer to install app updates, then press Update again.")
+                if (!canInstallPackages()) error("Allow XTM-MINER to install app updates, then press Update again.")
                 val updateDir = File(context.cacheDir, "verified-updates").apply { mkdirs() }
-                val apk = File(updateDir, "CryptoSteer-${manifest.versionCode}.apk")
+                val apk = File(updateDir, "XTM-MINER-${manifest.versionCode}.apk")
                 val digest = MessageDigest.getInstance("SHA-256")
                 var downloaded = 0L
                 var total = manifest.fileSize.coerceAtLeast(1L)
@@ -259,7 +259,7 @@ class UpdateManager(private val context: Context) {
     private fun verifyArchive(apk: File, manifest: ReleaseManifest) {
         val info = context.packageManager.getPackageArchiveInfo(apk.absolutePath, PackageManager.GET_SIGNING_CERTIFICATES)
             ?: error("Android could not parse the downloaded APK.")
-        require(info.packageName == BuildConfig.APPLICATION_ID) { "The APK belongs to ${info.packageName}, not CryptoSteer." }
+        require(info.packageName == BuildConfig.APPLICATION_ID) { "The APK belongs to ${info.packageName}, not XTM-MINER." }
         require(info.longVersionCode == manifest.versionCode) { "The APK version code does not match the signed manifest." }
         require(info.versionName == manifest.versionName) { "The APK version name does not match the signed manifest." }
         require(info.longVersionCode > BuildConfig.VERSION_CODE.toLong()) { "Downgrades and same-version replacements are not accepted by the in-app updater." }
@@ -270,7 +270,7 @@ class UpdateManager(private val context: Context) {
         )
         val installedSigners = signingDigests(installed.signingInfo)
         require(archiveSigners.isNotEmpty() && archiveSigners.any(installedSigners::contains)) {
-            "The APK is not signed by the installed CryptoSteer release identity."
+            "The APK is not signed by the installed XTM-MINER release identity."
         }
     }
 
@@ -321,12 +321,12 @@ class UpdateManager(private val context: Context) {
                 if (confirmation != null) {
                     confirmation.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(confirmation)
-                    mutableState.value = mutableState.value.copy(installing = true, message = "Confirm the signed CryptoSteer update in Android’s installer.", error = "")
+                    mutableState.value = mutableState.value.copy(installing = true, message = "Confirm the signed XTM-MINER update in Android’s installer.", error = "")
                 } else {
                     mutableState.value = mutableState.value.copy(installing = false, error = "Android did not provide an installation confirmation screen.")
                 }
             }
-            PackageInstaller.STATUS_SUCCESS -> mutableState.value = mutableState.value.copy(installing = false, blocked = false, message = "Update installed. Reopening CryptoSteer…", error = "")
+            PackageInstaller.STATUS_SUCCESS -> mutableState.value = mutableState.value.copy(installing = false, blocked = false, message = "Update installed. Reopening XTM-MINER…", error = "")
             else -> mutableState.value = mutableState.value.copy(installing = false, error = "Android rejected the update${if (detail.isBlank()) "." else ": $detail"}", message = "Update not installed.")
         }
     }

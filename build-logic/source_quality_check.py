@@ -69,7 +69,7 @@ def balanced_source(path: Path, text: str) -> None:
 
 
 GENERATED_PART_NAMES = {
-    '.git', '.gradle', '.idea', 'build', '.cxx', '.host-test-build', '__pycache__',
+    '.git', '.gradle', '.kotlin', '.idea', 'build', '.cxx', '.host-test-build', '__pycache__',
 }
 # These directories are created only after the immutable upstream sources are
 # cloned and cross-compiled. Upstream test fixtures and Autotools dependency
@@ -208,7 +208,7 @@ for literal in ('numeric_limits<std::uint32_t>::max()', 'hash.data() + 24U', 'po
     if literal not in hex_source: fail(f'Monero Stratum target-expansion invariant missing: {literal}')
 
 native = (ROOT / 'native/src/miner_engine.cpp').read_text()
-for literal in ('donation_retry_after', 'donation_stop_at', 'Donation pool connection failed; returning to user mining without increasing the fee:', 'runtime_.hashes.store(0', 'ScopedPasswordWipe', 'cryptosteer_secure_zero', 'wipe_string(config_.password)'):
+for literal in ('config.donation_basis_points = 0;', 'runtime_.hashes.store(0', 'ScopedPasswordWipe', 'cryptosteer_secure_zero', 'wipe_string(config_.password)'):
     if literal not in native: fail(f'Native lifecycle/donation invariant missing: {literal}')
 
 benchmark_source = (ROOT / 'native/src/benchmark.cpp').read_text()
@@ -258,7 +258,7 @@ for literal in (
         fail(f'Device-screen production invariant missing: {literal}')
 
 app_navigation = (ROOT / 'app/src/main/java/com/thecryptosteer/xmrminer/ui/CryptoSteerApp.kt').read_text()
-for literal in ('DEVICE("device", "Device")', 'Icons.Outlined.DeveloperBoard', 'DeviceScreen('):
+for literal in ('DEVICE("device", "Device")', 'onDevice =', 'DeviceScreen('):
     if literal not in app_navigation:
         fail(f'Device-tab navigation invariant missing: {literal}')
 

@@ -65,6 +65,7 @@ export PATH="$WRAPPER_DIR:$TOOLCHAIN/bin:$PATH"
 export SOURCE_DATE_EPOCH=1785558600
 COMMON_CMAKE=(
   -G Ninja
+  -DCMAKE_MAKE_PROGRAM="$NINJA"
   -DCMAKE_BUILD_TYPE=Release
   -DCMAKE_TOOLCHAIN_FILE="$NDK/build/cmake/android.toolchain.cmake"
   -DANDROID_ABI=arm64-v8a

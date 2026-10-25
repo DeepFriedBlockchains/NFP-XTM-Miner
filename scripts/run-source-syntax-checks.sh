@@ -336,11 +336,11 @@ fun main() {
     val validPool = PoolProfile(
         name = "Primary",
         primary = PoolEndpoint("pool.example.com", 443, true),
-        username = "wallet-or-pool-user",
+        username = "14AxNmpvVwr4sYxUPhYXnXmcCDsMxu54ZfBjb9EDpV5JBYC2u96kqoXJ99sxsytX8dgp8KVZxJNcanFsPqZSNCvd7Xg",
         worker = "Pixel10-Max",
     )
     check(PoolValidator.validate(validPool).valid)
-    check(!PoolValidator.validate(validPool.copy(worker = "")).valid)
+    check(PoolValidator.validate(validPool.copy(worker = "")).valid)
     val snapshot = MiningSnapshot(userMiningNanos = 49L * minute, donationMiningNanos = minute)
     check(snapshot.donationPercent <= 2.0)
     check(formatDuration(5) == "00:05")
@@ -363,6 +363,7 @@ KOTLIN
     "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/domain/DonationMath.kt" \
     "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/domain/Models.kt" \
     "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/domain/PoolValidator.kt" \
+    "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/domain/TariWalletValidator.kt" \
     "$ROOT/app/src/main/java/com/thecryptosteer/xmrminer/ui/UiLogic.kt" \
     "$TEMP_DIR/DomainSmoke.kt" -d "$KOTLIN_OUT/domain.jar"
   kotlin -classpath "$KOTLIN_OUT/domain.jar" DomainSmokeKt

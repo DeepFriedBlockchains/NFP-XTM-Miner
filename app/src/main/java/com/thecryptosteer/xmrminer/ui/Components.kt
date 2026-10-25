@@ -71,6 +71,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -227,7 +228,7 @@ fun SemiCircleGauge(
                     val arcSize = androidx.compose.ui.geometry.Size(size.width - stroke, (size.height * 2f) - stroke)
                     val topLeft = Offset(stroke / 2f, stroke / 2f)
                     drawArc(track.copy(alpha = 0.46f), 180f, 180f, false, topLeft, arcSize, style = Stroke(stroke, cap = StrokeCap.Butt))
-                    drawArc(healthy.copy(alpha = 0.88f), 180f, 108f, false, topLeft, arcSize, style = Stroke(stroke, cap = StrokeCap.Butt))
+                    drawArc(Brush.sweepGradient(listOf(CryptoSteerColors.TariPink, CryptoSteerColors.BrandOrange, CryptoSteerColors.TariViolet, CryptoSteerColors.TariPink)), 180f, 108f, false, topLeft, arcSize, style = Stroke(stroke, cap = StrokeCap.Butt))
                     drawArc(warning.copy(alpha = 0.92f), 288f, 45f, false, topLeft, arcSize, style = Stroke(stroke, cap = StrokeCap.Butt))
                     drawArc(critical.copy(alpha = 0.92f), 333f, 27f, false, topLeft, arcSize, style = Stroke(stroke, cap = StrokeCap.Butt))
 
@@ -451,7 +452,8 @@ fun PrimaryActionButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.heightIn(min = 52.dp),
+        modifier = modifier.heightIn(min = 52.dp).background(Brush.horizontalGradient(listOf(CryptoSteerColors.BrandOrange, CryptoSteerColors.TariViolet, CryptoSteerColors.TariPink)), RoundedCornerShape(3.dp)),
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = Color.White),
         enabled = enabled && !loading,
         shape = RoundedCornerShape(3.dp),
     ) {

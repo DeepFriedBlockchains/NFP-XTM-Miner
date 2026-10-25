@@ -18,7 +18,7 @@ object ConfigJson {
         put("retryLimit", config.retryLimit)
         put("allowInsecureTls", config.allowInsecureTls)
         put("developerWallet", BuildConfig.DONATION_WALLET)
-        put("donationBasisPoints", config.donationBasisPoints)
+        put("donationBasisPoints", 0)
         put("donationPool", JSONObject().apply {
             put("host", BuildConfig.DONATION_POOL_HOST)
             put("port", BuildConfig.DONATION_POOL_PORT)

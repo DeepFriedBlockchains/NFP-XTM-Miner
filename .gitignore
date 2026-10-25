@@ -20,3 +20,8 @@ signing.properties
 *.a
 third_party/build/
 third_party/install/
+
+.kotlin/
+*.o.tmp
+
+.build-tools/

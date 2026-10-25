@@ -12,3 +12,8 @@ add_executable(cryptosteer_host_tests
 )
 target_include_directories(cryptosteer_host_tests PRIVATE ../include)
 target_compile_options(cryptosteer_host_tests PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Werror=return-type)
+
+add_executable(xtm_stratum_tests stratum_tests.cpp ../src/stratum_client.cpp ../src/hex.cpp ../src/json.cpp)
+target_include_directories(xtm_stratum_tests PRIVATE ../include)
+target_compile_definitions(xtm_stratum_tests PRIVATE CRYPTOSTEER_VERSION="2.2.1")
+target_compile_options(xtm_stratum_tests PRIVATE -Wall -Wextra -Wpedantic -Werror=return-type)
