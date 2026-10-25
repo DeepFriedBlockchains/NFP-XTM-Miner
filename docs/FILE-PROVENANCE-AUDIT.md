@@ -19,7 +19,7 @@ Original inputs are retained unchanged in the parent recovery folder or their at
 | Attached `tarilogo.png`, `xtmlogo.png` | Branding inputs | Available; exact artwork recovered from the reference APK is the selected binary baseline |
 | Attached `REFERENCE-APK-COMPARISON.md` | Historical forensic report | Read and cross-checked against fresh APK metadata; not a fresh build result |
 | Attached pasted master assignments, including latest `bbb3c6d6…/Pasted text.txt` | Recovery requirements | Latest request used with earlier prompts; duplicate variants are retained outside source |
-| Referenced backup-drive prompt | Additional potential requirement copy | Access status recorded in recovery evidence; no destructive changes made to backup locations |
+| Referenced backup-drive prompt | Additional potential requirement copy | Accessible; SHA-256 matches the latest attached master prompt exactly; backup preserved |
 | Historical `xtm-miner-source-milestone.zip` / Termux materials | Separate project | Evidence inventory identifies Termux/XMRig with no APK/JNI integration; excluded, not deleted |
 
 No unexplained binary was adopted as a native dependency. Vendored dependencies are retained from Git history with their existing pins and RandomX relocation patch. Build-generated dependencies, caches, signing material, APKs and machine-local configuration are excluded from source commits.

@@ -15,4 +15,4 @@ This artwork license does not change the licenses of the application source or t
 
 ## XTM-MINER fork additions
 
-The supplied Tari logo in `branding/tari/tari-logo.png` is reused in the header and launcher. Tari trademarks belong to their owners; the upstream artwork license does not grant rights to Tari branding. The user-supplied dashboard reference is design guidance, not a screenshot of a running APK. Confirm trademark and asset redistribution terms before public store distribution.
+The supplied Tari logo in `branding/tari/tari-logo.png` is reused in the header and launcher. Tari trademarks belong to their owners; the upstream artwork license does not grant rights to Tari branding. The supplied dashboard reference is historical comparison material; it is not a screenshot of this reconstructed build. Confirm trademark and asset redistribution terms before public store distribution.

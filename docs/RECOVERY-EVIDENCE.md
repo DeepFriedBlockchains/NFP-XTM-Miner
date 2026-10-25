@@ -14,3 +14,7 @@ Fresh checks on 2026-10-25:
 Historical statements about 23 Android tests, lint with 37 warnings, 16 in-app accepted shares, 21 pool-side shares and extended Pixel testing are historical reports only. The provided 541 H/s screenshot has zero accepted shares at that moment. None of these establishes a new APK's mining validity.
 
 Fresh checks and remaining gaps are recorded separately in `TEST-REPORT.md`. Detailed input hashes, native library hashes and APK-entry hashes are in `validation/`. The source reconstruction deliberately does not import historical generated validation reports as new receipts.
+
+The backup-drive master prompt and latest attached pasted request have the same SHA-256: `30ae1e82c807457e6deb78651b38f2e1caa1c31d08183e26dd8761264f4ec692`. The attached copy was read in full.
+
+A source-download packaging defect was found during the clean archived build: OpenSSL's inherited `.* export-ignore` omitted this fork's native provenance marker. An explicit `.gitattributes` exception now preserves that receipt without weakening dependency verification. `tests/integration/test_git_archive_markers.py` passes against the committed tree. Native dependency verification passes after extracting the corrected marker. Native dependency code pins are unchanged.

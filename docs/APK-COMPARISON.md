@@ -25,3 +25,11 @@ Reference native libraries:
 All three have ELF machine 183 (AArch64). Reference entry hashes and metadata are retained in `validation/`. Manifest inspection reports a visible special-use mining foreground service, notification/network/wake-lock permissions, biometric access, legacy updater permission and disabled upstream service declarations. These declarations are not evidence that remote-control or updater networking is enabled in this fork.
 
 A fresh APK/native build is expected to differ after adding the terminal and rebuilding with a new debug signing key. Binary equality is not the acceptance criterion. UI equivalence and actual accepted shares require independent device testing; see `PHONE-TESTING.md`.
+
+## Fresh rebuilt APK
+
+`NFP-XTM-Miner-arm64-debug.apk`: 75,068,158 bytes, SHA-256 `328a44c5f25341243725e990fe695e4a9f278e2189300e680a32baf52949800c`. Signature, CRC and 16 KiB packaging/ELF alignment PASS. ID, version, SDK bounds, launcher and ARM64 match. Logo pixels match exactly. Both support addresses, terminal label and eight license assets are packaged.
+
+AndroidX graphics and DataStore native hashes match the reference exactly. Rebuilt engine: 6,150,192 bytes, SHA-256 `a731d0a0fef99b2329d3d30b7928bffd34ba10727d2a2e03efc213a2cb5f14e8`. Engine bytes differ after reconstruction/logging. Device UI equivalence and real mining remain unverified.
+
+New certificate SHA-256 `cdda1c58c234456cb60cc89b6bb437f75b0e96b64ebfe1a365ac1ff09defcf56` differs from reference `5667196a8b427373214a3bf7d08534777f4381bb2bf3495336a9f2f0ab9611d5`. This APK cannot be an in-place signed update. Fresh receipts are in `validation/new-apk-*`.

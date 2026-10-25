@@ -26,3 +26,7 @@ Vendored source is already included. Do not run the historical vendor-clone help
 Output: `app/build/outputs/apk/debug/app-debug.apk`. Copy verified bytes to `NFP-XTM-Miner-arm64-debug.apk`, compute SHA-256, and record the new certificate with `apksigner verify --verbose --print-certs`. Check `aapt2 dump badging`, `zipalign -c -P 16 -v 4`, native ELF alignment and archive ARM64 contents. Save test XML and lint receipts; compiling the Android test APK does not execute instrumentation.
 
 Debug signing keys are development identities. If they differ from the reference, Android cannot install the new APK as an in-place update. Preserve the installed known-good app/data until the owner chooses a test installation strategy. Never commit or overwrite signing keys. Production signing and public Release publication are separate, explicit release gates.
+
+On a small Linux/WSL environment, use one Gradle worker, `-Dorg.gradle.jvmargs=-Xmx1536m -Pkotlin.compiler.execution.strategy=in-process -Pkotlin.incremental=false`. This completed the fresh recovery build on about 3.6 GiB RAM. Default larger Gradle/Kotlin heaps exhausted that environment. Building native dependencies first and Android tasks afterward avoids competing compiler memory use.
+
+For source downloads, retain OpenSSL's `.cryptosteer-upstream-commit` marker. The fork's `.gitattributes` exception now prevents its removal by the inherited hidden-file archive rule. Run `python3 tests/integration/test_git_archive_markers.py` in a Git checkout to verify the downloaded-archive contract.

@@ -1,0 +1,64 @@
+{
+  "file": "NFP-XTM-Miner-arm64-debug.apk",
+  "bytes": 75068158,
+  "sha256": "328a44c5f25341243725e990fe695e4a9f278e2189300e680a32baf52949800c",
+  "application_id": "com.nfprojects.xtmminer.debug",
+  "version_name": "2.2.1-debug",
+  "version_code": 20201,
+  "min_sdk": 36,
+  "target_sdk": 37,
+  "native_libraries": [
+    {
+      "path": "lib/arm64-v8a/libandroidx.graphics.path.so",
+      "bytes": 10096,
+      "sha256": "41e9a793c43a0f4fddb19e33f346bace464f30f888ba7b9eaf96294ea115bfb6",
+      "load_alignments": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libcryptosteer_miner.so",
+      "bytes": 6150192,
+      "sha256": "a731d0a0fef99b2329d3d30b7928bffd34ba10727d2a2e03efc213a2cb5f14e8",
+      "load_alignments": [
+        16384,
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libdatastore_shared_counter.so",
+      "bytes": 7784,
+      "sha256": "178f89a2c6c9234ddf980dd4cd1f3616186a46b2b932aafa6707abd04c5fd76a",
+      "load_alignments": [
+        16384,
+        16384,
+        16384,
+        16384
+      ]
+    }
+  ],
+  "unit_tests": {
+    "tests": 27,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "Warning": 47
+  },
+  "zip_crc": "PASS",
+  "zipalign_16k": "PASS",
+  "reference_logo_pixels_equal": true,
+  "voluntary_addresses_present": true,
+  "mining_terminal_present": true,
+  "upstream_wallet_and_moneroocean_absent": true,
+  "bundled_license_files": 8,
+  "signer_certificate_sha256": "cdda1c58c234456cb60cc89b6bb437f75b0e96b64ebfe1a365ac1ff09defcf56",
+  "same_signer_as_reference": false,
+  "compiled_source_commit": "4ad51e9",
+  "device_and_pool_testing": "NOT PERFORMED"
+}

@@ -6,9 +6,9 @@
 - [x] Reconstruct Tari conversion on the existing Android foundation; recover reference artwork.
 - [x] Source zero-fee enforcement and UI-only voluntary donation separation.
 - [x] Implement Settings terminal over existing logs with sanitization and bounded retention.
-- [ ] Fresh ARM64 native build and full Android compilation.
-- [ ] Fresh Android tests/lint plus APK identity, signature and 16 KiB packaging verification.
-- [ ] Compare new APK resources/native interfaces against reference; document expected differences.
+- [x] Fresh ARM64 native build and full Android compilation.
+- [x] Fresh tests/lint, APK identity, signature and 16 KiB verification (27 tests; 0 lint errors / 47 warnings).
+- [x] Compare APK resources/native interfaces; record expected differences and remaining device UI comparison.
 - [ ] Preserve validated recovery source on GitHub, open review PR, verify same commits on GitLab.
 - [ ] Test install/launch with an explicit signer/data-preservation plan.
 - [ ] Verify real jobs, accepted pool shares and one-hour physical-device stability from the new APK.
